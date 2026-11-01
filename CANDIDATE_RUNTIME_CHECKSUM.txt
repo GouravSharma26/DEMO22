@@ -1,0 +1,5 @@
+Algorithm: SHA-256
+File: CandidateID_Workbench.zip (Standalone Windows Runtime Distribution)
+Size: 22,339,972 bytes
+SHA-256: F3C809867D03BBC811FABDFBA428E299C0D955DA9877952B7E2D4334AA8107AA
+Package Content: 38 files across 9 internal directories (Launch.exe, workbench_app.exe, Qt 6.8.2 DLLs & plugins, MSVC runtime, documentation, sample data)
