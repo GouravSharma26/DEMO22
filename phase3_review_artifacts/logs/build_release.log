@@ -5,17 +5,8 @@
   workbench_core.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\src\core\Release\workbench_core.lib
   1>Automatic MOC and UIC for target workbench_app_lib
   Building Custom Rule C:/Gourav Sharma/work/EngiWorkbench/src/app/CMakeLists.txt
-  mocs_compilation_Release.cpp
-  main_window.cpp
-  backprop_view.cpp
-  geometry_view.cpp
-  hardware_view.cpp
-  performance_view.cpp
-  thermal_view.cpp
-  Generating Code...
   workbench_app_lib.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\src\app\Release\workbench_app_lib.lib
   Building Custom Rule C:/Gourav Sharma/work/EngiWorkbench/src/app/CMakeLists.txt
-  main.cpp
   workbench_app.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\src\app\Release\workbench_app.exe
   Building Custom Rule C:/Gourav Sharma/work/EngiWorkbench/tests/CMakeLists.txt
   workbench_backprop_tests.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_backprop_tests.exe
@@ -26,7 +17,6 @@
   workbench_experiments.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\src\experiments\Release\workbench_experiments.exe
   1>Automatic MOC and UIC for target workbench_gui_tests
   Building Custom Rule C:/Gourav Sharma/work/EngiWorkbench/tests/CMakeLists.txt
-  test_gui_integration.cpp
   workbench_gui_tests.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_gui_tests.exe
   Building Custom Rule C:/Gourav Sharma/work/EngiWorkbench/tests/CMakeLists.txt
   workbench_parser_tests.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_parser_tests.exe

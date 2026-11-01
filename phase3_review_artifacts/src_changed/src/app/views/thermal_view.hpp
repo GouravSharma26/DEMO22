@@ -22,6 +22,11 @@ public:
     const domain::ThermalSolution& currentSolution() const { return *current_solution_; }
     const std::vector<domain::ConvergenceRecord>& convergenceRecords() const noexcept { return convergence_records_; }
 
+    void setConductivity(double k) { if (k_spin_) k_spin_->setValue(k); }
+    void setRodLength(double l) { if (length_spin_) length_spin_->setValue(l); }
+    double conductivity() const { return k_spin_ ? k_spin_->value() : 0.0; }
+    double rodLength() const { return length_spin_ ? length_spin_->value() : 0.0; }
+
 public slots:
     void onSolveClicked();
     void onConvergenceStudyClicked();

@@ -116,8 +116,8 @@ test 8
 8: >>> MainWindow created
 8: >>> MainWindow shown
 8: GUI integration tests finished with result: 0
-8/8 Test #8: workbench_gui_tests ............................   Passed    1.48 sec
+8/8 Test #8: workbench_gui_tests ............................   Passed    1.46 sec
 
 100% tests passed out of 8
 
-Total Test time (real) =   1.69 sec
+Total Test time (real) =   1.63 sec

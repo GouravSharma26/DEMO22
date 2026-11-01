@@ -4,7 +4,9 @@
 **Repository:** `https://github.com/GouravSharma26/EngiWorkbench.git`  
 **Phase:** 3 — Full Application Integration & Verification  
 **Evaluation Target:** Native Windows 11 x64 Desktop Application (`workbench_app.exe`) & Test Harness (`workbench_gui_tests.exe`)  
-**Commit Reference:** `336a153` (with Phase 3 test harness & export hardening)  
+**Phase 2 Baseline Commit:** `336a1534065dd675d0b471be339ff3f3387dc462`  
+**Phase 3 Implementation Commit:** `d443e5a7b67d583095aa62c6d480746654e5904d`  
+**Documentation Alignment Commit:** `74ab6a9ed5fa17997a3159fa3e7fe0b8fb4e7751`  
 **Date:** 2026-11-01  
 
 ---
@@ -16,20 +18,20 @@ Phase 3 establishes the end-to-end operational readiness and numerical integrity
 ### Key Verification Highlights
 1. **Architectural Separation Maintained:** All numerical algorithms, mesh parsers, embedded hardware state machines, and backpropagation models reside exclusively in the Qt-independent static library `workbench_core`. The desktop interface (`workbench_app` and `workbench_app_lib`) consumes these APIs strictly as presentation clients without replicating or modifying core logic.
 2. **Dual-Configuration CTest Suite:** All eight automated CTest suites pass with 100% success rate across both **Release** and **Debug** builds.
-3. **Comprehensive GUI Test Suite:** A new automated QtTest suite (`workbench_gui_tests`) comprises 11 distinct automated end-to-end integration test cases covering all 5 views, modal dialog handling, asynchronous cancellation, and rapid tab switching.
+3. **Comprehensive GUI Test Suite:** An automated QtTest suite (`workbench_gui_tests`) comprises 9 scenario test methods and 11 total QtTest PASS entries (including test environment setup and cleanup) covering all 5 views, modal dialog handling, deterministic asynchronous cancellation, and rapid tab switching.
 4. **Verified Numerical Fidelity:** The desktop GUI produces exact numerical agreement with the Phase 2 native experiments:
    - Thermal FEA nodal superconvergence error: `0.000000e+00 °C` (<= `1e-9 °C`).
    - Thermal FEA midpoint discretization error for $N=10$: `1.250000 °C`.
-   - Mesh convergence study across $N \in \{10, 20, 40, 80\}$ exhibits exact quadratic error reduction ($O(h^2)$, error ratio $\approx 4.00$).
+   - Mesh convergence study across $N \in \{10, 20, 40, 80\}$ exhibits exact quadratic error reduction ($O(h^2)$, error ratio $= 4.0000$).
    - 1,000-case multicore benchmark serial vs parallel maximum absolute temperature difference: `0.000000e+00 °C` (<= `1e-8 °C`).
    - Backpropagation analytical gradient vs central finite difference ($h=10^{-6}$) maximum absolute error: `1.130190e-10` (<= `1e-5`).
    - 100-step training trace loss strictly monotonic decreasing from `1.182541819` to $< 10^{-15}$.
 5. **Robust Error Handling & Safety:**
-   - Asynchronous thread cancellation stops worker threads gracefully without state corruption.
+   - Asynchronous thread cancellation stops worker threads gracefully without state corruption or publishing partial results.
    - Malformed/missing files produce non-fatal user error dialogs, leaving viewport state intact.
    - CSV export operations strictly validate stream readiness and write status before reporting success.
    - Path resolution supports execution from arbitrary working directories, resolving bundled assets via multi-level directory traversal.
-6. **Provenance & Compliance:** The application prominently displays persistent provenance notices on the status bar and About dialog: `Workbench Core: 0.1.0 | Provenance: Hardware adapters SIMULATED. Temperature CSV synthetic.`
+6. **Provenance & Compliance:** The application prominently displays persistent provenance notices on the status bar and About dialog: `Workbench Core: v0.1.0-prototype | Provenance: Hardware adapters SIMULATED. Temperature CSV synthetic.`
 
 ---
 
@@ -58,8 +60,8 @@ The application and test suite were built and validated under both Microsoft Vis
 
 | Preset Name | Configuration | Toolchain | Qt Version | CTest Suites Passed | Real Test Time |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `windows-msvc-x64-release` | Release | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 1.02 s |
-| `windows-msvc-x64-debug` | Debug | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 5.12 s |
+| `windows-msvc-x64-release` | Release | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 1.68 s |
+| `windows-msvc-x64-debug` | Debug | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 5.11 s |
 
 ---
 
@@ -70,26 +72,29 @@ The application and test suite were built and validated under both Microsoft Vis
 - **Workflow & Features Verified:**
   1. **ASCII STL Parsing & 3D Rendering:** Loads `data/examples/sample_tetrahedron_ascii.stl` (4 triangular facets). Renders shaded 3D mesh with wireframe toggle and fit-to-view bounding box calculation.
   2. **Point Cloud Visualization:** Loads `data/examples/synthetic_temperature_nodes.csv` (7 synthetic nodal records). Maps temperature values ($20.0^\circ\text{C}$ to $100.0^\circ\text{C}$) to a continuous thermal colormap (blue $\to$ cyan $\to$ green $\to$ yellow $\to$ red).
-  3. **Interactive Click Selection:** Selecting Node 1 ($x=0, y=0, z=0$) dynamically updates the properties table: ID `1`, Coordinates `(0.000, 0.000, 0.000)`, Temperature `20.00 °C`.
+  3. **Interactive Selection & Property Inspection:** Programmatic node selection handler verified: selecting Node 1 ($x=0, y=0, z=0$) dynamically updates the properties table: ID `1`, Coordinates `(0.000, 0.000, 0.000)`, Temperature `20.00 °C`. Physical 3D viewport raycasting mouse selection verified via interactive UI verification.
   4. **Robust Path & Error Handling:** Relative file paths resolve across directory boundaries. Loading missing or corrupt files displays an actionable non-fatal error dialog without disrupting current viewport data.
 - **Evidence Screenshot:** `docs/evidence/phase3/01_geometry_view_stl.png` and `docs/evidence/phase3/02_geometry_view_pointcloud.png`.
 
 ### 3.2 View 2 — Thermal Analysis (`ThermalView`)
 - **Objective:** 1D steady-state thermal FEA simulation with exact analytical solution comparison and mesh refinement convergence verification.
 - **Mathematical Specification:**
-  - Governing equation: $-k \frac{d^2 T}{dx^2} = q$, with $L=1.0\,\text{m}$, $k=50.0\,\text{W/(m}\cdot\text{K)}$, $q=5000.0\,\text{W/m}^3$, $T(0)=20.0^\circ\text{C}$, $T(L)=100.0^\circ\text{C}$.
-  - Analytical solution: $T_{\text{exact}}(x) = T_0 + \frac{x}{L}(T_L - T_0) + \frac{q}{2k} x (L - x)$.
+  - Rod parameters: Length $L = 1.0\,\text{m}$, cross-sectional area $A = 10^{-4}\,\text{m}^2$, thermal conductivity $k = 10.0\,\text{W/(m}\cdot\text{K)}$, volumetric heat generation $q = 10000.0\,\text{W/m}^3$.
+  - Prescribed Dirichlet boundary temperatures: Left boundary $T(0) = 100.0^\circ\text{C}$, right boundary $T(L) = 20.0^\circ\text{C}$.
+  - Governing heat equation: $-k \frac{d^2 T}{dx^2} = q$.
+  - Analytical solution: $T_{\text{exact}}(x) = T_0 + \frac{x}{L}(T_L - T_0) + \frac{q}{2k} x (L - x) = 100 - 80x + 500x(1-x)$.
 - **Workflow & Features Verified:**
-  1. **FEA Solve & Analytical Overlay:** Discretizes bar into $N=10$ linear two-node elements. Solves tridiagonal linear system. Plots FEA nodal temperatures against the continuous analytical parabolic profile.
-  2. **Nodal Superconvergence:** Nodal temperatures match analytical values exactly: maximum absolute nodal error is `0.000000e+00 °C` (well below tolerance $10^{-9\circ}\text{C}$).
-  3. **Element Midpoint Error:** Midpoint error evaluates to exactly `1.250000 °C`, perfectly matching theoretical midpoint discretization error $\frac{q h^2}{8k} = \frac{5000 \times 0.1^2}{8 \times 50} = 1.25^\circ\text{C}$.
-  4. **Mesh Convergence Study:** Evaluates $N \in \{10, 20, 40, 80\}$. Error ratios between successive mesh doublings are:
-     - $N=20$: $e = 0.3125^\circ\text{C}$, ratio $= 4.000000$
-     - $N=40$: $e = 0.078125^\circ\text{C}$, ratio $= 4.000000$
-     - $N=80$: $e = 0.019531^\circ\text{C}$, ratio $= 4.000000$
-     Confirming exact theoretical $O(h^2)$ quadratic convergence.
-  5. **Parameter Validation:** Non-physical parameters ($k \le 0$, $L \le 0$, $N < 1$) are rejected with informative error messages.
-  6. **CSV Export:** Nodal solution and convergence tables export cleanly to validated CSV files.
+  1. **FEA Solve & Analytical Overlay:** Discretizes the 1D bar into $N=10$ linear two-node elements ($h=0.1\,\text{m}$). Assembles tridiagonal element stiffness and consistent load vectors. Solves the linear system and plots FEA nodal temperatures against the continuous analytical parabola.
+  2. **Nodal Superconvergence:** Nodal temperatures agree with analytical values to floating-point precision: maximum absolute nodal error is `0.000000e+00 °C` (criterion: $\le 10^{-9\circ}\text{C}$).
+  3. **Element Midpoint Discretization Error:** For $N=10$ elements ($h = 0.1\,\text{m}$), the maximum absolute midpoint error is exactly `1.250000 °C`, perfectly matching theoretical midpoint discretization error $\frac{q h^2}{8k} = \frac{10000 \times 0.1^2}{8 \times 10} = 1.25^\circ\text{C}$.
+  4. **Mesh Convergence Study:** Evaluates $N \in \{10, 20, 40, 80\}$. Maximum midpoint errors and reduction ratios are:
+     - $N=10$ ($h=0.1000\,\text{m}$): $e = 1.250000^\circ\text{C}$ (baseline)
+     - $N=20$ ($h=0.0500\,\text{m}$): $e = 0.312500^\circ\text{C}$, ratio $= 4.0000$
+     - $N=40$ ($h=0.0250\,\text{m}$): $e = 0.078125^\circ\text{C}$, ratio $= 4.0000$
+     - $N=80$ ($h=0.0125\,\text{m}$): $e = 0.01953125^\circ\text{C}$, ratio $= 4.0000$
+     Confirming exact theoretical $O(h^2)$ quadratic asymptotic convergence.
+  5. **Parameter Validation:** Tested at both domain level (`ThermalProblem::validate()` rejects negative $k$ and non-positive $L$) and GUI level (`ThermalView::onSolveClicked()` displays warning dialog and aborts safely when spinbox inputs violate physical constraints).
+  6. **CSV Export:** Validates that nodal temperatures and convergence study records export to cleanly formatted, verified CSV files.
 - **Evidence Screenshot:** `docs/evidence/phase3/03_thermal_view_solved.png` and `docs/evidence/phase3/04_thermal_view_convergence.png`.
 
 ### 3.3 View 3 — Multicore Performance Benchmark (`PerformanceView`)
@@ -99,7 +104,7 @@ The application and test suite were built and validated under both Microsoft Vis
   2. **Asynchronous Execution:** Computations run on a background worker thread via `workbench::batch::ThreadPool`. GUI remains 100% responsive, updating status and progress smoothly.
   3. **Preserved Input Order:** Output results maintain strict 1:1 input ordering across all worker configurations.
   4. **Strict Numerical Agreement:** Serial ($p=1$) vs Parallel ($p > 1$) results are bit-exact: maximum absolute temperature difference is `0.000000e+00 °C` (criterion: $\le 10^{-8\circ}\text{C}$).
-  5. **Safe Asynchronous Cancellation:** Triggering "Cancel" signals the background worker to halt execution immediately without publishing corrupt or partial result sets.
+  5. **Deterministic Asynchronous Cancellation:** Exercised using a heavy workload (30,000 cases with 200 elements) guaranteeing that the background worker is actively processing when cancellation is signalled. Verified that `benchmarkCancelled` signal is emitted, Run button is re-enabled, Cancel button is disabled, status indicates cancellation, no partial results are published, and previously completed results remain intact.
   6. **Visualization:** Displays execution times, speedup curve $S_p = T_1 / T_p$, and efficiency metric $E_p = S_p / p$.
 - **Evidence Screenshot:** `docs/evidence/phase3/05_performance_view_completed.png`.
 
@@ -109,12 +114,9 @@ The application and test suite were built and validated under both Microsoft Vis
   - Strictly labeled as **SIMULATED** mocks; no claim of physical hardware presence.
   - JTAG adapter represented strictly as a programming/debugging TAP interface, not a compute board.
 - **Workflow & Features Verified:**
-  1. **ESP32 MCU Adapter:** Connects mock serial interface, polls live telemetry (supply voltage $3.3\,\text{V}$, simulated core temperature $\approx 42^\circ\text{C}$, packet counter increments).
-  2. **Fault Injection & Recovery:**
-     - Operator toggles "Inject Timeout". Adapter immediately transitions to `Error` state and logs a timeout fault.
-     - Operator clears fault injection and triggers reconnection. The adapter recovers cleanly to `Connected` state and resumes streaming.
-  3. **Arty A7 FPGA Adapter:** Simulates bitstream configuration, status register verification, and internal sensor monitoring.
-  4. **JTAG Interface Adapter:** Simulates TAP controller scans, device ID detection, and chain integrity checking.
+  1. **Interactive Device Cards:** Connects, polls telemetry, and disconnects all three simulated cards: ESP32 MCU, Arty A7 FPGA, and JTAG TAP Bridge.
+  2. **ESP32 MCU Lifecycle & Fault Recovery:** Streams active telemetry ($3.3\,\text{V}$ rail, core temperature $\approx 42^\circ\text{C}$, packet counter increments). Toggling "Inject Timeout" transitions card to `Error` state; triggering reconnection recovers link to `Connected` state.
+  3. **Arty A7 FPGA & JTAG Adapters:** Verifies simulated connection, register/telemetry polling, and clean disconnection. (Comprehensive low-level TAP state transitions and bitstream configuration are verified by `workbench_embedded_tests`.)
 - **Evidence Screenshot:** `docs/evidence/phase3/06_hardware_view_esp32_connected.png` and `docs/evidence/phase3/07_hardware_view_fault_recovered.png`.
 
 ### 3.5 View 5 — Backpropagation & Gradient Verification (`BackpropView`)
@@ -143,10 +145,10 @@ The application and test suite were built and validated under both Microsoft Vis
      - $b_1 = 0.0 - 0.1(-1.20946448) = 0.12094645$
      - $v_1 = 1.0 - 0.1(-0.71068205) = 1.07106820$
      - $c_1 = 0.0 - 0.1(-1.53788284) = 0.15378828$
-  4. **100-Step Training Trace:**
-     - Simultaneous gradient updates across 100 epochs.
+  4. **100-Step Training Trace & Plot Autoscaling:**
+     - Clicking "Run 100-Step Training" benchmarks 100 simultaneous parameter updates starting from the step 0 baseline ($w=0.5, b=0.0, v=1.0, c=0.0, J_0 = 1.182541819$).
      - Loss exhibits strict monotonic decrease from $1.182541819$ to $< 10^{-15}$ ($1.70\times 10^{-20}$) at step 100.
-     - Plot renders loss curve on linear/logarithmic scales.
+     - PlotWidget anchors linear non-negative data at $0.0$, scaling the Y-axis range to $[0.0, 1.28]$, fully encompassing step 0 ($1.182542$).
   5. **Parameter Reset:** Restores baseline parameters instantly.
 - **Evidence Screenshot:** `docs/evidence/phase3/08_backprop_view_trained.png`.
 
@@ -180,20 +182,20 @@ Test project C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-release
     Start 2: workbench_thermal_tests
 2/8 Test #2: workbench_thermal_tests ........................   Passed    0.01 sec
     Start 3: workbench_parser_tests
-3/8 Test #3: workbench_parser_tests .........................   Passed    0.01 sec
+3/8 Test #3: workbench_parser_tests .........................   Passed    0.02 sec
     Start 4: workbench_performance_tests
-4/8 Test #4: workbench_performance_tests ....................   Passed    0.01 sec
+4/8 Test #4: workbench_performance_tests ....................   Passed    0.02 sec
     Start 5: workbench_embedded_tests
-5/8 Test #5: workbench_embedded_tests .......................   Passed    0.01 sec
+5/8 Test #5: workbench_embedded_tests .......................   Passed    0.02 sec
     Start 6: workbench_backprop_tests
-6/8 Test #6: workbench_backprop_tests .......................   Passed    0.01 sec
+6/8 Test #6: workbench_backprop_tests .......................   Passed    0.02 sec
     Start 7: workbench_experiments_failure_exit_code_test
-7/8 Test #7: workbench_experiments_failure_exit_code_test ...   Passed    0.13 sec
+7/8 Test #7: workbench_experiments_failure_exit_code_test ...   Passed    0.12 sec
     Start 8: workbench_gui_tests
-8/8 Test #8: workbench_gui_tests ............................   Passed    0.79 sec
+8/8 Test #8: workbench_gui_tests ............................   Passed    1.45 sec
 
 100% tests passed out of 8
-Total Test time (real) =   1.02 sec
+Total Test time (real) =   1.68 sec
 ```
 
 ### 5.2 Debug Build CTest Execution (`ctest --preset windows-msvc-x64-debug`)
@@ -204,20 +206,20 @@ Test project C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-debug
     Start 2: workbench_thermal_tests
 2/8 Test #2: workbench_thermal_tests ........................   Passed    0.01 sec
     Start 3: workbench_parser_tests
-3/8 Test #3: workbench_parser_tests .........................   Passed    0.01 sec
+3/8 Test #3: workbench_parser_tests .........................   Passed    0.02 sec
     Start 4: workbench_performance_tests
 4/8 Test #4: workbench_performance_tests ....................   Passed    0.02 sec
     Start 5: workbench_embedded_tests
 5/8 Test #5: workbench_embedded_tests .......................   Passed    0.01 sec
     Start 6: workbench_backprop_tests
-6/8 Test #6: workbench_backprop_tests .......................   Passed    0.01 sec
+6/8 Test #6: workbench_backprop_tests .......................   Passed    0.02 sec
     Start 7: workbench_experiments_failure_exit_code_test
 7/8 Test #7: workbench_experiments_failure_exit_code_test ...   Passed    0.43 sec
     Start 8: workbench_gui_tests
-8/8 Test #8: workbench_gui_tests ............................   Passed    4.57 sec
+8/8 Test #8: workbench_gui_tests ............................   Passed    4.54 sec
 
 100% tests passed out of 8
-Total Test time (real) =   5.12 sec
+Total Test time (real) =   5.11 sec
 ```
 
 ### 5.3 Detailed GUI Integration Test Suite Breakdown (`workbench_gui_tests.exe`)

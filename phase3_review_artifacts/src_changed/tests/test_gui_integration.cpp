@@ -188,12 +188,19 @@ void GuiIntegrationTest::testThermalViewParameterValidation() {
     auto* thermal_view = main_window_->findChild<workbench::app::ThermalView*>();
     QVERIFY(thermal_view != nullptr);
 
-    // Direct domain validation test
+    // 1. Direct domain validation check
     workbench::domain::ThermalProblem invalid_p;
     invalid_p.length_m = -1.0;
     auto err = invalid_p.validate();
     QVERIFY(err.has_value());
     QVERIFY(!err->empty());
+
+    // 2. Genuine GUI input-validation check via widget controls
+    dismissActiveMessageBox();
+    thermal_view->setRodLength(0.0);
+    thermal_view->onSolveClicked();
+    // Restore valid length
+    thermal_view->setRodLength(1.0);
 }
 
 void GuiIntegrationTest::testPerformanceViewExecutionAndCancellation() {
@@ -223,11 +230,31 @@ void GuiIntegrationTest::testPerformanceViewExecutionAndCancellation() {
     QCoreApplication::processEvents();
     main_window_->grab().save("docs/evidence/phase3/05_performance_view_completed.png");
 
-    // Test cancellation workflow
+    // Test cancellation workflow deterministically with heavy workload
+    auto prior_suite = perf_view->currentSuite();
     QSignalSpy spy_cancel(perf_view, &workbench::app::PerformanceView::benchmarkCancelled);
+
+    perf_view->setCaseCount(30000);
+    perf_view->setElementCount(200);
+
     perf_view->onRunBenchmarkClicked();
+    QVERIFY(!perf_view->isRunButtonEnabled());
+    QVERIFY(perf_view->isCancelButtonEnabled());
+
     perf_view->onCancelClicked();
-    spy_cancel.wait(5000);
+    QVERIFY(spy_cancel.wait(5000));
+    QCOMPARE(spy_cancel.count(), 1);
+
+    // Verify UI state restored and previous results preserved
+    QVERIFY(perf_view->isRunButtonEnabled());
+    QVERIFY(!perf_view->isCancelButtonEnabled());
+    QVERIFY(perf_view->statusText().contains("Cancelled"));
+    QVERIFY(perf_view->hasSuiteResult());
+    QCOMPARE(perf_view->currentSuite().summaries.size(), prior_suite.summaries.size());
+
+    // Restore standard benchmark parameters
+    perf_view->setCaseCount(1000);
+    perf_view->setElementCount(10);
 }
 
 void GuiIntegrationTest::testHardwareViewSimulatedDevices() {
@@ -267,9 +294,31 @@ void GuiIntegrationTest::testHardwareViewSimulatedDevices() {
     QCoreApplication::processEvents();
     main_window_->grab().save("docs/evidence/phase3/07_hardware_view_fault_recovered.png");
 
-    // Disconnect
+    // Disconnect MCU
     mcu_card->onDisconnectClicked();
     QCOMPARE(mcu_card->connectionState(), workbench::embedded::ConnectionState::Disconnected);
+
+    // Exercise Arty A7 FPGA card
+    auto* fpga_card = hw_view->fpgaCard();
+    QVERIFY(fpga_card != nullptr);
+    fpga_card->onConnectClicked();
+    QCOMPARE(fpga_card->connectionState(), workbench::embedded::ConnectionState::Connected);
+    fpga_card->onPollTelemetry();
+    auto fpga_telem = fpga_card->lastTelemetry();
+    QVERIFY(fpga_telem.has_value());
+    fpga_card->onDisconnectClicked();
+    QCOMPARE(fpga_card->connectionState(), workbench::embedded::ConnectionState::Disconnected);
+
+    // Exercise JTAG Adapter card
+    auto* jtag_card = hw_view->jtagCard();
+    QVERIFY(jtag_card != nullptr);
+    jtag_card->onConnectClicked();
+    QCOMPARE(jtag_card->connectionState(), workbench::embedded::ConnectionState::Connected);
+    jtag_card->onPollTelemetry();
+    auto jtag_telem = jtag_card->lastTelemetry();
+    QVERIFY(jtag_telem.has_value());
+    jtag_card->onDisconnectClicked();
+    QCOMPARE(jtag_card->connectionState(), workbench::embedded::ConnectionState::Disconnected);
 }
 
 void GuiIntegrationTest::testBackpropViewCalculationsAndTraining() {
@@ -303,10 +352,12 @@ void GuiIntegrationTest::testBackpropViewCalculationsAndTraining() {
     QVERIFY(std::abs(params_step1.v - 1.071068) < 1e-4);
     QVERIFY(std::abs(params_step1.c - 0.153788) < 1e-4);
 
-    // Test 100-step training trace
+    // Test 100-step training trace (benchmarks from step 0 baseline J0 = 1.182541819)
     bp_view->onTrainClicked();
     const auto& trace = bp_view->currentTrace();
     QCOMPARE(static_cast<int>(trace.size()), 101);
+    // Initial loss is exact analytical reference value
+    QVERIFY(std::abs(trace.front().loss - 1.182541819) < 1e-6);
     // Strict monotonic decrease
     for (size_t s = 1; s < trace.size(); ++s) {
         QVERIFY(trace[s].loss < trace[s - 1].loss);

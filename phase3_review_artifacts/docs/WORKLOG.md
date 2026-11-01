@@ -769,6 +769,62 @@ Decision made:
 Next step:
 - Present Phase 3 completion report to user and await review and approval.
 
+### 2026-11-01 — Increment 14: Phase 3 independent review remediation and evidence alignment
+
+Time spent: 1.5 hours
+Requirements addressed: Independent review remediation for Phase 3 (Thermal specification reconciliation, deterministic cancellation test, GUI test coverage classification, backprop plot autoscaling, evidence package regeneration).
+Files inspected:
+- `src/app/views/thermal_view.cpp`, `src/core/src/thermal/solver.cpp`
+- `results/thermal_nodal_temperature_N10.csv`, `results/thermal_midpoint_errors.csv`, `results/thermal_convergence_study.csv`
+- `src/app/widgets/plot_widget.cpp`, `src/app/views/backprop_view.cpp`
+- `src/app/views/performance_view.hpp`, `src/app/views/performance_view.cpp`
+- `tests/test_gui_integration.cpp`
+Files changed:
+- `src/app/widgets/plot_widget.cpp`
+- `src/app/views/backprop_view.cpp`
+- `src/app/views/thermal_view.hpp`
+- `src/app/views/performance_view.hpp`
+- `tests/test_gui_integration.cpp`
+- `docs/PHASE_3_INTEGRATION_VERIFICATION.md`
+- `docs/PHASE_3_TEST_MATRIX.csv`
+- `docs/evidence/phase3/08_backprop_view_trained.png`
+- `docs/WORKLOG.md`
+
+Implementation summary:
+- Corrected Thermal Analysis documentation to match actual application defaults and solver configuration: L=1.0m, A=1e-4m², k=10 W/(m·K), q=10000 W/m³, T(0)=100 °C, T(L)=20 °C, N=10 elements; analytical solution T(x)=100 - 80x + 500x(1-x); theoretical midpoint error q*h²/(8*k) = 1.25 °C; convergence errors N=10 (1.25 °C), N=20 (0.3125 °C), N=40 (0.078125 °C), N=80 (0.01953125 °C) with quadratic ratio 4.0000.
+- Strengthened cancellation verification in `tests/test_gui_integration.cpp`: configured heavy workload (30,000 cases, 200 elements) ensuring worker is actively executing when cancel is clicked; asserted `spy_cancel.wait(5000)` and `spy_cancel.count() == 1`; verified UI state restoration and verified prior results are preserved without publishing partial results.
+- Added GUI-level parameter validation test in `testThermalViewParameterValidation` testing `setRodLength(0.0)` via widget interface in addition to domain-level validation.
+- Enhanced `testHardwareViewSimulatedDevices` to exercise interactive connection, telemetry polling, and clean disconnection across all three cards (ESP32, FPGA, JTAG).
+- Fixed Backpropagation plot autoscaling: anchored linear Y-axis at 0.0 for non-negative series in `PlotWidget`; ensured `BackpropView::onTrainClicked()` runs 100-step training from step 0 baseline ($J_0 = 1.182541819$); verified plot scales to $[0.0, 1.28]$ fully encompassing step 0; recaptured `08_backprop_view_trained.png`.
+- Reconciled documentation and test matrix: 9 GUI scenario test methods, 11 total QtTest PASS entries (including setup and cleanup); accurately cited commit history (`336a153` baseline, `d443e5a` Phase 3, `74ab6a9` docs alignment).
+
+Commands run:
+- `cmake --preset windows-msvc-x64-debug` (Exit code: 0)
+- `cmake --build --preset windows-msvc-x64-debug` (Exit code: 0)
+- `ctest --preset windows-msvc-x64-debug --output-on-failure -V` (Exit code: 0, 8/8 passed, 5.11 s)
+- `cmake --preset windows-msvc-x64-release` (Exit code: 0)
+- `cmake --build --preset windows-msvc-x64-release` (Exit code: 0)
+- `ctest --preset windows-msvc-x64-release --output-on-failure -V` (Exit code: 0, 8/8 passed, 1.68 s)
+
+Test results:
+- Release CTest: 8/8 passed (100%), real execution time: 1.68 s.
+- Debug CTest: 8/8 passed (100%), real execution time: 5.11 s.
+- GUI Integration Suite (`workbench_gui_tests.exe`): 11/11 tests passed, 0 failed.
+
+Evidence paths:
+- `docs/evidence/phase3/` (refreshed screenshots including `08_backprop_view_trained.png`)
+- `docs/PHASE_3_INTEGRATION_VERIFICATION.md`
+- `docs/PHASE_3_TEST_MATRIX.csv`
+- `EngiWorkbench_Phase3_Review_Artifacts.zip`
+
+Decision made:
+- Rebuild review archive and upload updated package and checksum to DEMO22 repo.
+- Preserve main repository local commit without pushing to origin/main.
+
+Next step:
+- Upload updated artifacts to DEMO22 and deliver final remediation report.
+
+
 
 
 

@@ -26,6 +26,12 @@ public:
     bool hasSuiteResult() const noexcept { return current_suite_.has_value(); }
     const workbench::performance::BenchmarkSuiteResult& currentSuite() const { return *current_suite_; }
 
+    void setCaseCount(int cases) { if (cases_spin_) cases_spin_->setValue(cases); }
+    void setElementCount(int elements) { if (elements_spin_) elements_spin_->setValue(elements); }
+    bool isRunButtonEnabled() const { return run_btn_ && run_btn_->isEnabled(); }
+    bool isCancelButtonEnabled() const { return cancel_btn_ && cancel_btn_->isEnabled(); }
+    QString statusText() const { return status_label_ ? status_label_->text() : QString(); }
+
 public slots:
     void onRunBenchmarkClicked();
     void onCancelClicked();

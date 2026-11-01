@@ -199,7 +199,8 @@ void BackpropView::onStepClicked() {
 }
 
 void BackpropView::onTrainClicked() {
-    // Fresh training run from current parameters
+    // Reset to baseline parameters so full 100-step training trace benchmarks from step 0 (J0 = 1.182542)
+    model_ = backprop::Model(1.0, 2.0, {0.5, 0.0, 1.0, 0.0});
     current_trace_ = model_.train(100, 0.1);
     updateForwardDisplay();
     updateParameterTable();
