@@ -1,0 +1,16 @@
+﻿MSBuild version 17.14.51+25f168cee for .NET Framework
+
+  1>Checking Build System
+  Launch.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\src\launcher\Debug\Launch.exe
+  workbench_core.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\src\core\Debug\workbench_core.lib
+  1>Automatic MOC and UIC for target workbench_app
+  Building Custom Rule C:/Gourav Sharma/work/EngiWorkbench/src/app/CMakeLists.txt
+  workbench_app.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\src\app\Debug\workbench_app.exe
+  workbench_backprop_tests.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\tests\Debug\workbench_backprop_tests.exe
+  workbench_core_tests.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\tests\Debug\workbench_core_tests.exe
+  workbench_embedded_tests.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\tests\Debug\workbench_embedded_tests.exe
+  workbench_experiments.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\src\experiments\Debug\workbench_experiments.exe
+  workbench_parser_tests.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\tests\Debug\workbench_parser_tests.exe
+  workbench_performance_tests.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\tests\Debug\workbench_performance_tests.exe
+  workbench_thermal_tests.vcxproj -> C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-debug\tests\Debug\workbench_thermal_tests.exe
+  Building Custom Rule C:/Gourav Sharma/work/EngiWorkbench/CMakeLists.txt
