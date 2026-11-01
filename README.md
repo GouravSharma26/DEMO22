@@ -11,7 +11,7 @@
 
 | Artifact | File Name | Size (Bytes) | SHA-256 Checksum | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| **All-Inclusive Candidate Package** | CandidateID_Workbench.zip | 32,011,492 B | `EC1FACFC0101A94C2150B8D3CDFE073A11E44DBA919EB718AD58524619D06BFB` | **Authoritative unified submission archive**: Standalone Windows app (Launch.exe, workbench_app.exe, Qt runtime) + full C++ source, CMake, tests, results CSVs, logs, ownership declaration, and screenshots. |
+| **All-Inclusive Candidate Package** | CandidateID_Workbench.zip | 36,069,013 B | `17A75B30F13833982C4FC8C0A5BD69FAC0423786ACE5B5B4F0E2FCE90A189EFA` | **Authoritative unified submission archive**: Standalone Windows app (Launch.exe, workbench_app.exe, Qt runtime) + full C++ source, CMake, tests, results CSVs, logs, ownership declaration, and screenshots. |
 | **Standalone Runtime Package** | CandidateID_Workbench_Runtime_v1.zip | 22,339,972 B | `F3C809867D03BBC811FABDFBA428E299C0D955DA9877952B7E2D4334AA8107AA` | Verified 38-file standalone runtime package (tested in relocated directory C:\EngiWorkbench Acceptance Test\Candidate Package\). |
 | **Extracted Runtime Directory** | CandidateID_Workbench/ | 38 files | Verified | Extracted folder containing standalone binaries, Qt plugins, MSVC runtimes, docs, and example assets. |
 | **Phase 3 Review Artifacts** | EngiWorkbench_Phase3_Review_Artifacts.zip | 1,051,816 B | `B24C481578637A4FEAB5A66BDC52B8B94A07BAA1DDD90A11EFBC57C31F1F8E07` | Phase 3 application integration and GUI end-to-end verification archive. |

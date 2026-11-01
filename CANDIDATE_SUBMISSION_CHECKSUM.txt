@@ -12,8 +12,8 @@ GUI: Qt 6.8.2 MSVC 2022 64-bit
 1. Authoritative All-Inclusive Candidate Submission Package
 --------------------------------------------------------------------------------
 File: CandidateID_Workbench.zip
-Size: 32,011,492 bytes (30.53 MB)
-SHA-256: EC1FACFC0101A94C2150B8D3CDFE073A11E44DBA919EB718AD58524619D06BFB
+Size: 36,069,013 bytes (34.40 MB)
+SHA-256: 17A75B30F13833982C4FC8C0A5BD69FAC0423786ACE5B5B4F0E2FCE90A189EFA
 Format Hygiene: 174 file entries with conventional forward-slash (/) paths; 100% CRC verified
 Scope: Unified submission archive containing:
   - Standalone Windows application at root (Launch.exe, workbench_app.exe, workbench_experiments.exe, workbench_gui_tests.exe)
