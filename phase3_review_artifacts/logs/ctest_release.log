@@ -1,0 +1,123 @@
+﻿UpdateCTestConfiguration  from :C:/Gourav Sharma/work/EngiWorkbench/DartConfiguration.tcl
+Test project C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-release
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: workbench_core_tests
+
+1: Test command: "C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_core_tests.exe"
+1: Working Directory: C:/Gourav Sharma/work/EngiWorkbench
+1: Test timeout computed to be: 10000000
+1: [Test Runner] Starting workbench_core test suite...
+1:   [PASS] Test 1: core::self_check() returned true
+1:   [PASS] Test 2: core::get_version() values match expected
+1:   [PASS] Test 3: core::get_version_string() == "v0.1.0-prototype"
+1: [Test Runner] Finished. Passed 3 of 3 tests.
+1/8 Test #1: workbench_core_tests ...........................   Passed    0.01 sec
+test 2
+    Start 2: workbench_thermal_tests
+
+2: Test command: "C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_thermal_tests.exe"
+2: Working Directory: C:/Gourav Sharma/work/EngiWorkbench
+2: Test timeout computed to be: 10000000
+2: [Test Suite: Thermal FEA 1D]
+2:   [PASS] Test 1: Analytical solution sanity check (T(0)=100, T(1)=20, T(0.42)=188.2)
+2:   [PASS] Test 2: Negative/boundary input validation correctly rejects invalid problems
+2:   [PASS] Test 3: Mesh convergence (N=10: 1.25 C, N=20: 0.3125 C, N=40: 0.078125 C, N=80: 0.01953125 C; ratio ~4.0)
+2:   [PASS] Test 4: FE nodal solution exactness (|T_FE - T_exact| <= 1e-9 C at all nodes)
+2:   [PASS] Test 5: Prescribed Dirichlet boundary conditions strictly satisfied (100 C and 20 C)
+2:   [PASS] Test 6: Thermal CSV serialization formatted correctly
+2: [Test Suite: Thermal FEA 1D] Passed 6 of 6 tests.
+2/8 Test #2: workbench_thermal_tests ........................   Passed    0.01 sec
+test 3
+    Start 3: workbench_parser_tests
+
+3: Test command: "C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_parser_tests.exe"
+3: Working Directory: C:/Gourav Sharma/work/EngiWorkbench
+3: Test timeout computed to be: 10000000
+3: [Test Suite: ASCII STL & CSV Parsers]
+3:   [PASS] Test 1: Bundled sample tetrahedron ASCII STL parsed 4 facets successfully (solid: sample_tetrahedron_units_m)
+3:   [PASS] Test 2: Binary STL signature correctly detected and rejected
+3:   [PASS] Test 3: Incomplete facet (2 vertices) properly rejected
+3:   [PASS] Test 4: Bundled synthetic CSV parsed 7 nodes with provenance label
+3:   [PASS] Test 5: Flexible CSV column ordering handled correctly
+3:   [PASS] Test 6: Duplicate node ID rejected with actionable status
+3:   [PASS] Test 7: Non-finite (NaN) value rejected
+3:   [PASS] Test 8: Header-only CSV correctly rejected as empty dataset
+3: [Test Suite: ASCII STL & CSV Parsers] Passed 8 of 8 tests.
+3/8 Test #3: workbench_parser_tests .........................   Passed    0.01 sec
+test 4
+    Start 4: workbench_performance_tests
+
+4: Test command: "C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_performance_tests.exe"
+4: Working Directory: C:/Gourav Sharma/work/EngiWorkbench
+4: Test timeout computed to be: 10000000
+4: [Test Suite: Multicore Performance Benchmark]
+4:   [PASS] Test 1: Seeded case generator is deterministic and enforces physical bounds
+4:   [PASS] Test 2: Serial vs parallel outputs agree within <= 1e-8 C (Max diff: 0 C)
+4:   [PASS] Test 3: Result indexing strictly preserves deterministic input case order
+4:   [PASS] Test 4: Cancellation safely halts execution and returns empty vector
+4:   [PASS] Test 5: Benchmark suite (1 warm-up, 5 reps, median, speedup, efficiency) completed successfully
+4: [Test Suite: Multicore Performance Benchmark] Passed 5 of 5 tests.
+4/8 Test #4: workbench_performance_tests ....................   Passed    0.01 sec
+test 5
+    Start 5: workbench_embedded_tests
+
+5: Test command: "C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_embedded_tests.exe"
+5: Working Directory: C:/Gourav Sharma/work/EngiWorkbench
+5: Test timeout computed to be: 10000000
+5: [Test Suite: Embedded System Mocks]
+5:   [PASS] Test 1: All three mock adapters discovered and identified as SIMULATED
+5:   [PASS] Test 2: Voltage references (3.3V) and interface capabilities properly declared
+5:   [PASS] Test 3: Standard connect -> read telemetry -> disconnect lifecycle verified
+5:   [PASS] Test 4: Injected timeout fault caught and safely recovered via reconnection
+5:   [PASS] Test 5: JTAG adapter telemetry explicitly confirms debug bridge designation
+5: [Test Suite: Embedded System Mocks] Passed 5 of 5 tests.
+5/8 Test #5: workbench_embedded_tests .......................   Passed    0.01 sec
+test 6
+    Start 6: workbench_backprop_tests
+
+6: Test command: "C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_backprop_tests.exe"
+6: Working Directory: C:/Gourav Sharma/work/EngiWorkbench
+6: Test timeout computed to be: 10000000
+6: [Test Suite: Handwritten-style Backpropagation]
+6:   [PASS] Test 1: Forward pass matches reference values exactly (J=1.182542, y_hat=0.462117)
+6:   [PASS] Test 2: Analytical gradients match reference values (dw=-1.209464, dv=-0.710682, dc=-1.537883)
+6:   [PASS] Test 3: Central finite differences match analytical gradients within <= 1e-5 (Max error: 1.13019e-10)
+6:   [PASS] Test 4: One-step simultaneous update matches reference parameters (J_1=0.685774)
+6:   [PASS] Test 5: 100-step training trace converges monotonically (J_0=1.1825 -> J_100=1.70262e-20, y_hat=2)
+6:   [PASS] Test 6: Training trace and gradient check CSV formatted correctly
+6: [Test Suite: Handwritten-style Backpropagation] Passed 6 of 6 tests.
+6/8 Test #6: workbench_backprop_tests .......................   Passed    0.01 sec
+test 7
+    Start 7: workbench_experiments_failure_exit_code_test
+
+7: Test command: C:\Users\GOURAV\AppData\Local\Programs\Python\Python312\Lib\site-packages\cmake\data\bin\cmake.exe "-DEXECUTABLE=C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-release/src/experiments/Release/workbench_experiments.exe" "-DEXPECTED_CODE=1" "-DSIMULATE_FAILURE=TRUE" "-DOUTPUT_DIR=C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-release/tests/simulated_failure_test_output" "-P" "C:/Gourav Sharma/work/EngiWorkbench/tests/verify_exit_code.cmake"
+7: Working Directory: C:/Gourav Sharma/work/EngiWorkbench
+7: Test timeout computed to be: 10000000
+7: -- Process: C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-release/src/experiments/Release/workbench_experiments.exe
+7: -- Arguments: --simulate-failure;--output-dir;C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-release/tests/simulated_failure_test_output
+7: -- Actual exit code: 1
+7: -- Expected exit code: 1
+7: -- Exit code verification PASSED: process returned 1 as expected.
+7/8 Test #7: workbench_experiments_failure_exit_code_test ...   Passed    0.10 sec
+test 8
+    Start 8: workbench_gui_tests
+
+8: Test command: "C:\Gourav Sharma\work\EngiWorkbench\build\windows-msvc-x64-release\tests\Release\workbench_gui_tests.exe"
+8: Working Directory: C:/Gourav Sharma/work/EngiWorkbench
+8: Test timeout computed to be: 10000000
+8: Starting GUI integration tests...
+8: >>> initTestCase START
+8: >>> MainWindow created
+8: >>> MainWindow shown
+8: GUI integration tests finished with result: 0
+8/8 Test #8: workbench_gui_tests ............................   Passed    1.48 sec
+
+100% tests passed out of 8
+
+Total Test time (real) =   1.69 sec
