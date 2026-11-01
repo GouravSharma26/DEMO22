@@ -1,0 +1,121 @@
+================================================================================
+ENGIWORKBENCH — RELEASE PACKAGE MANIFEST
+================================================================================
+
+Project Name:
+  PASS Science Works — Unified Engineering Simulation & Analysis Platform (EngiWorkbench)
+
+Release Version:
+  v1.0.0-candidate (v0.1.0-prototype)
+
+Packaged Application Version:
+  0.1.0 (MSVC 19.44.35228.0)
+
+Source Git Commit Hash:
+  574e0eca9b88e6beaf9a7d6d047657a3b243f9e7 (574e0ec)
+
+Build Configuration:
+  Release x64 (/O2 /std:c++17)
+
+Compiler Toolchain:
+  Microsoft Visual C++ 2022 Community (v19.44.35228.0)
+
+GUI Framework:
+  Qt 6.8.2 MSVC 2022 64-bit (Dynamic Linking under LGPLv3)
+
+Package Creation Date:
+  2026-11-01
+
+Target Platform:
+  Microsoft Windows 10 / Windows 11 x64 (Offline, Zero-Install, Standalone)
+
+================================================================================
+INCLUDED EXECUTABLES & RUNTIME BINARIES
+================================================================================
+
+1. Launch.exe:
+   - Role: Native Win32 double-clickable launcher wrapper (37 KB).
+   - Provenance: Custom Win32 C++ application (zero Qt dependencies).
+   - Behavior: Automatically resolves relative path to workbench_app.exe, preserves
+     working directory for bundled assets, forwards CLI parameters, and displays
+     informative graphical error dialogs if components are missing.
+
+2. workbench_app.exe:
+   - Role: Main engineering workstation desktop application (384 KB).
+   - Views: Geometry & Point Cloud, 1D Thermal FEA, Multicore Performance Benchmark,
+     Embedded Hardware Mocks, and Neural Network Backpropagation.
+
+3. workbench_experiments.exe:
+   - Role: Native C++ headless experiment and verification runner (173 KB).
+   - Capability: Generates all numerical verification CSVs independently of Qt GUI.
+
+4. workbench_gui_tests.exe:
+   - Role: Automated QtTest GUI integration test harness (410 KB).
+   - Coverage: 11 passed scenarios covering all 5 views and modal workflows.
+
+================================================================================
+DEPLOYED RUNTIME DEPENDENCIES
+================================================================================
+
+Qt 6.8.2 Shared Dynamic Libraries:
+  - Qt6Core.dll
+  - Qt6Gui.dll
+  - Qt6Widgets.dll
+  - Qt6Network.dll
+  - Qt6Svg.dll
+  - Qt6OpenGL.dll
+  - Qt6OpenGLWidgets.dll
+  - Qt6Test.dll
+
+Qt 6.8.2 Platform & Style Plugins:
+  - platforms/qwindows.dll (mandatory Windows platform abstraction plugin)
+  - styles/qmodernwindowsstyle.dll (desktop widget theming)
+  - imageformats/qsvg.dll, qjpeg.dll, qgif.dll, qico.dll
+  - iconengines/qsvgicon.dll
+  - generic/qtuiotouchplugin.dll
+  - networkinformation/qnetworklistmanager.dll
+  - tls/qcertonlybackend.dll, qschannelbackend.dll
+
+Microsoft Visual C++ 2022 x64 Runtime Redistributables:
+  - msvcp140.dll
+  - vcruntime140.dll
+  - vcruntime140_1.dll
+
+Windows Graphics Subsystem Libraries:
+  - opengl32sw.dll (software rasterizer fallback)
+  - D3Dcompiler_47.dll (Direct3D shader compiler)
+
+================================================================================
+BUNDLED DATA ASSETS & DOCUMENTATION
+================================================================================
+
+Example Assets (data/examples/):
+  - sample_tetrahedron_ascii.stl (ASCII STL tetrahedron geometry, 4 facets)
+  - synthetic_temperature_nodes.csv (7-node synthetic temperature distribution)
+  - manifest.json (provenance metadata and physical descriptions)
+  - README.md (data usage guidelines)
+
+Submission Documentation (docs/):
+  - docs/FINAL_REPORT.md (comprehensive engineering assignment report)
+  - docs/DEMO_SCRIPT.md (structured live demonstration walkthrough)
+  - docs/AI_USE_LOG.md (transparent AI assistance log and methodology)
+  - README.md (packaged user manual and architecture guide)
+  - THIRD_PARTY_NOTICES.md (licensing information for Qt LGPLv3 and MSVC runtime)
+
+================================================================================
+DISCLAIMERS & PROVENANCE DECLARATIONS
+================================================================================
+
+1. Embedded Hardware Adapters:
+   All hardware interfaces (ESP32-DevKitC MCU, Arty A7-35T FPGA, JTAG-HS2 TAP Bridge)
+   are strictly SIMULATED software mocks. No physical hardware is connected,
+   powered, debugged, or programmed. JTAG is an interface adapter, not a compute board.
+
+2. Thermal Temperature Point Cloud:
+   The supplied temperature CSV dataset (synthetic_temperature_nodes.csv) is a
+   SYNTHETIC test fixture generated for UI visualization. It is NOT an actual
+   ANSYS simulation export.
+
+3. File Format Scope:
+   Only ASCII STL is supported in the geometry viewer. Binary STL and proprietary
+   CAD solid models are intentionally rejected by design with actionable diagnostics.
