@@ -192,7 +192,10 @@ void PerformanceView::onRunBenchmarkClicked() {
 
     worker_thread_ = std::thread([this, cases = current_cases_, workers]() {
         try {
-            auto suite = performance::run_benchmark(cases, workers, &this->cancel_flag_);
+            auto suite = performance::run_benchmark(cases, workers, &this->cancel_flag_,
+                [this](size_t p, int rep) {
+                    emit this->benchmarkProgress(p, rep);
+                });
             if (this->cancel_flag_.load()) {
                 emit this->benchmarkCancelled();
             } else {

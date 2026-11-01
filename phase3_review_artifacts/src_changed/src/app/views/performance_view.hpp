@@ -37,6 +37,7 @@ public slots:
     void onCancelClicked();
 
 signals:
+    void benchmarkProgress(size_t worker_count, int repetition);
     void benchmarkCompleted(const workbench::performance::BenchmarkSuiteResult& result);
     void benchmarkCancelled();
     void benchmarkFailed(const QString& error);

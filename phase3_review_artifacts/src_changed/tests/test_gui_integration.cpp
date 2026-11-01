@@ -188,19 +188,27 @@ void GuiIntegrationTest::testThermalViewParameterValidation() {
     auto* thermal_view = main_window_->findChild<workbench::app::ThermalView*>();
     QVERIFY(thermal_view != nullptr);
 
-    // 1. Direct domain validation check
+    // 1. Direct domain validation check: domain model rejects non-physical inputs
     workbench::domain::ThermalProblem invalid_p;
     invalid_p.length_m = -1.0;
     auto err = invalid_p.validate();
     QVERIFY(err.has_value());
     QVERIFY(!err->empty());
 
-    // 2. Genuine GUI input-validation check via widget controls
-    dismissActiveMessageBox();
+    // 2. GUI protection via positive-input range enforcement:
+    // Attempting to set rod length <= 0 via GUI controls is sanitized/clamped to the positive minimum (0.01 m)
     thermal_view->setRodLength(0.0);
+    QCOMPARE(thermal_view->rodLength(), 0.01);
+
+    // Verify solver executes safely with the sanitized boundary value
     thermal_view->onSolveClicked();
-    // Restore valid length
+    QVERIFY(thermal_view->hasSolution());
+    QCOMPARE(thermal_view->currentSolution().problem.length_m, 0.01);
+
+    // Restore standard rod length (1.0 m) and re-solve
     thermal_view->setRodLength(1.0);
+    thermal_view->onSolveClicked();
+    QCOMPARE(thermal_view->currentSolution().problem.length_m, 1.0);
 }
 
 void GuiIntegrationTest::testPerformanceViewExecutionAndCancellation() {
@@ -230,10 +238,12 @@ void GuiIntegrationTest::testPerformanceViewExecutionAndCancellation() {
     QCoreApplication::processEvents();
     main_window_->grab().save("docs/evidence/phase3/05_performance_view_completed.png");
 
-    // Test cancellation workflow deterministically with heavy workload
+    // Test active-worker cancellation workflow with deterministic synchronization
     auto prior_suite = perf_view->currentSuite();
+    QSignalSpy spy_progress(perf_view, &workbench::app::PerformanceView::benchmarkProgress);
     QSignalSpy spy_cancel(perf_view, &workbench::app::PerformanceView::benchmarkCancelled);
 
+    // Set heavy workload to ensure multi-second execution
     perf_view->setCaseCount(30000);
     perf_view->setElementCount(200);
 
@@ -241,16 +251,33 @@ void GuiIntegrationTest::testPerformanceViewExecutionAndCancellation() {
     QVERIFY(!perf_view->isRunButtonEnabled());
     QVERIFY(perf_view->isCancelButtonEnabled());
 
+    // Deterministic synchronization point: wait until worker has actively begun processing batches
+    QVERIFY(spy_progress.wait(5000));
+    QVERIFY(spy_progress.count() >= 1);
+
+    // Signal cancellation while worker is actively running
     perf_view->onCancelClicked();
     QVERIFY(spy_cancel.wait(5000));
     QCOMPARE(spy_cancel.count(), 1);
 
-    // Verify UI state restored and previous results preserved
+    // Confirm workload was still incomplete when cancelled (full run = 18 progress notifications)
+    QVERIFY(spy_progress.count() < 18);
+
+    // Verify UI state restored
     QVERIFY(perf_view->isRunButtonEnabled());
     QVERIFY(!perf_view->isCancelButtonEnabled());
     QVERIFY(perf_view->statusText().contains("Cancelled"));
+
+    // Verify no partial results were published: prior complete benchmark summaries match bit-for-bit
     QVERIFY(perf_view->hasSuiteResult());
-    QCOMPARE(perf_view->currentSuite().summaries.size(), prior_suite.summaries.size());
+    const auto& post_suite = perf_view->currentSuite();
+    QCOMPARE(post_suite.summaries.size(), prior_suite.summaries.size());
+    for (size_t i = 0; i < prior_suite.summaries.size(); ++i) {
+        QCOMPARE(post_suite.summaries[i].worker_count, prior_suite.summaries[i].worker_count);
+        QCOMPARE(post_suite.summaries[i].median_ms, prior_suite.summaries[i].median_ms);
+        QCOMPARE(post_suite.summaries[i].speedup, prior_suite.summaries[i].speedup);
+        QCOMPARE(post_suite.summaries[i].efficiency, prior_suite.summaries[i].efficiency);
+    }
 
     // Restore standard benchmark parameters
     perf_view->setCaseCount(1000);

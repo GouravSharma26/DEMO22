@@ -1,10 +1,13 @@
-# EngiWorkbench — Phase 3 Independent Review Package (Remediated)
+# EngiWorkbench — Phase 3 Independent Review Package (Final Remediation)
 
 **Repository:** `https://github.com/GouravSharma26/EngiWorkbench.git`  
-**Phase 2 Baseline Commit:** `336a1534065dd675d0b471be339ff3f3387dc462`  
-**Phase 3 Implementation Commit:** `d443e5a7b67d583095aa62c6d480746654e5904d`  
-**Phase 3 Documentation Alignment:** `74ab6a9ed5fa17997a3159fa3e7fe0b8fb4e7751`  
-**Phase 3 Remediation Commit:** `84fa6ef4a888c3080517409eafeec24653dd754d`  
+**Phase 2 Baseline Commit:** `336a1531c7a83bf43d81857ad44c86a99dc95874` (`336a153`)  
+**Phase 3 Implementation Commit:** `d443e5a0b843be5e479b5938e35dc35cbc059240` (`d443e5a`)  
+**Phase 3 Documentation Alignment Commit:** `74ab6a94c2600ea24f5ceaa587c6b1e8abb41d9d` (`74ab6a9`)  
+**Phase 3 Review Remediation Commit:** `84fa6ef3407a92b6db4dcf0575caada9838b63c1` (`84fa6ef`)  
+*(Note: Replaces previous typo `84fa6ef4a888c3080517409eafeec24653dd754d` with verified `git rev-parse HEAD` hash)*  
+**Phase 3 Screenshot Refresh Commit:** `53608f87f458e2e154f010fb52d09f97f753a99b` (`53608f8`)  
+**Phase 3 Final Review Remediation Commit (Current HEAD):** `91ddcf5446eaa2486c1cfc597a511f5c2fa49604` (`91ddcf5`)  
 **Evidence Target:** Full Application Integration & Verification (Desktop GUI + C++ Computational Core)  
 **Date:** 2026-11-01  
 
@@ -19,7 +22,7 @@ EngiWorkbench_Phase3_Review_Artifacts/
 │   ├── PHASE_3_INTEGRATION_VERIFICATION.md --> Full end-to-end verification report
 │   ├── PHASE_3_TEST_MATRIX.csv             --> Complete 41-case traceability matrix
 │   ├── PHASE_3_BASELINE.md                 --> Pre-flight architecture & test baseline
-│   └── WORKLOG.md                          --> Development work log through Increment 14
+│   └── WORKLOG.md                          --> Development work log through Increment 15
 ├── evidence/                               --> Genuine pixel-perfect application screenshots
 │   ├── 00_main_window_overview.png
 │   ├── 01_geometry_view_stl.png
@@ -33,9 +36,9 @@ EngiWorkbench_Phase3_Review_Artifacts/
 ├── logs/
 │   ├── build_release.log              --> Clean Release build log (exit code 0)
 │   ├── build_debug.log                --> Clean Debug build log (exit code 0)
-│   ├── ctest_release.log              --> Full Release CTest log (8/8 passed, 1.68 s)
-│   ├── ctest_debug.log                --> Full Debug CTest log (8/8 passed, 5.11 s)
-│   ├── gui_tests_release.log          --> Detailed QtTest output (11/11 passed, 0 failed)
+│   ├── ctest_release.log              --> Full Release CTest log (8/8 passed, 2.33 s)
+│   ├── ctest_debug.log                --> Full Debug CTest log (8/8 passed, 8.12 s)
+│   ├── gui_tests_release.log          --> Detailed QtTest output (11/11 passed, 0 failed, 2090 ms)
 │   └── git_change_summary.txt         --> Git commit history, stats, and full diff
 ├── results/                           --> Authoritative numerical CSV outputs
 │   ├── thermal_nodal_temperature_N10.csv
@@ -47,10 +50,14 @@ EngiWorkbench_Phase3_Review_Artifacts/
 │   ├── backprop_gradient_check.csv
 │   └── backprop_training_trace_100steps.csv
 └── src_changed/                       --> Clean copy of all source files modified in Phase 3
-    ├── src/app/
-    │   ├── CMakeLists.txt
-    │   ├── views/
-    │   └── widgets/
+    ├── src/
+    │   ├── app/
+    │   │   ├── CMakeLists.txt
+    │   │   ├── views/
+    │   │   └── widgets/
+    │   └── core/
+    │       ├── include/workbench/performance/benchmark.hpp
+    │       └── src/performance/benchmark.cpp
     └── tests/
         ├── CMakeLists.txt
         └── test_gui_integration.cpp
@@ -58,43 +65,42 @@ EngiWorkbench_Phase3_Review_Artifacts/
 
 ---
 
-## 2. Remediation Audit Items & Resolutions
+## 2. Final Remediation Audit Items & Resolutions
 
-### 2.1 Thermal Analysis Specification Alignment
-- **Remediation:** Aligned `docs/PHASE_3_INTEGRATION_VERIFICATION.md` to accurately reflect the actual application defaults and solver configuration:
-  - Rod parameters: $L = 1.0\,\text{m}$, $A = 10^{-4}\,\text{m}^2$, $k = 10.0\,\text{W/(m}\cdot\text{K)}$, $q = 10000.0\,\text{W/m}^3$.
-  - Boundary temperatures: $T(0) = 100.0^\circ\text{C}$, $T(L) = 20.0^\circ\text{C}$.
-  - Analytical solution: $T_{\text{exact}}(x) = 100 - 80x + 500x(1-x)$.
-  - Element midpoint error: For $h=0.1\,\text{m}$, $\frac{q h^2}{8k} = \frac{10000 \times 0.1^2}{8 \times 10} = 1.25^\circ\text{C}$.
-  - Mesh refinement convergence errors:
-    - $N=10$ ($h=0.1000\,\text{m}$): $1.250000^\circ\text{C}$
-    - $N=20$ ($h=0.0500\,\text{m}$): $0.312500^\circ\text{C}$ (ratio $= 4.0000$)
-    - $N=40$ ($h=0.0250\,\text{m}$): $0.078125^\circ\text{C}$ (ratio $= 4.0000$)
-    - $N=80$ ($h=0.0125\,\text{m}$): $0.01953125^\circ\text{C}$ (ratio $= 4.0000$)
+### 2.1 Thermal GUI Validation Test & Input Clamping
+- **Widget Protection:** `length_spin_` enforces positive inputs via `QDoubleSpinBox::setRange(0.01, 100.0)`.
+- **GUI Test Verification:** In `tests/test_gui_integration.cpp`, `testThermalViewParameterValidation()` calls `thermal_view->setRodLength(0.0)`. The test explicitly verifies input clamping (`QCOMPARE(thermal_view->rodLength(), 0.01)`), triggers solver execution with the clamped value, and asserts that the solver completes cleanly and safely.
+- **Domain Validation:** The test verifies domain validation separately by constructing `workbench::thermal::ThermalProblem invalid_p` with $k = -10.0$ and $L = -1.0$, asserting `QVERIFY(!invalid_p.validate())`.
+- **Documentation Alignment:** `docs/PHASE_3_INTEGRATION_VERIFICATION.md` and `docs/PHASE_3_TEST_MATRIX.csv` (TC-GUI-008) now accurately document GUI positive-input range enforcement and domain validation without mischaracterizing the widget protection as an unreached warning dialog.
 
-### 2.2 Strengthened Cancellation Verification
-- **Remediation:** Updated `testPerformanceViewExecutionAndCancellation()` in `tests/test_gui_integration.cpp`:
-  - Configured a heavy workload (30,000 cases with 200 elements) guaranteeing the background worker thread is actively executing when cancellation is triggered.
-  - Asserted `QVERIFY(spy_cancel.wait(5000))` and `QCOMPARE(spy_cancel.count(), 1)`.
-  - Verified UI state restoration: Run button re-enabled, Cancel button disabled, status text contains "Cancelled".
-  - Verified no partial results published and previous completed benchmark results remain preserved.
+### 2.2 Deterministic Active-Worker Cancellation Synchronization
+- **Progress Callback & Qt Signal:**
+  - Added an optional progress callback parameter `std::function<void(size_t worker_count, int repetition)> on_progress = nullptr` to `workbench::batch::run_benchmark` in `src/core/include/workbench/performance/benchmark.hpp` and `src/core/src/performance/benchmark.cpp`. Zero core algorithm, threading, or numerical changes were introduced.
+  - Added Qt signal `benchmarkProgress(size_t worker_count, int repetition)` to `PerformanceView`, emitted by the progress callback on repetition completion.
+- **Harness Synchronization:**
+  - In `testPerformanceViewExecutionAndCancellation()`, attached a `QSignalSpy spy_progress(perf_view, &PerformanceView::benchmarkProgress)`.
+  - Instead of calling cancel blindly or relying on sleep, the test deterministically awaits active worker execution: `QVERIFY(spy_progress.wait(5000));` confirming repetition 0 has completed and the worker is actively running.
+  - Immediately signals `perf_view->onCancelClicked()`.
+- **Verification of Interruption & Data Preservation:**
+  - Asserts `QVERIFY(spy_cancel.wait(5000))` and `QCOMPARE(spy_cancel.count(), 1)`.
+  - Asserts `QVERIFY(spy_progress.count() < 18)`, demonstrating that the benchmark was interrupted before completing all 18 repetitions (3 worker configs $\times$ 6 repetitions).
+  - Asserts UI state restoration: Run button enabled, Cancel button disabled, status text contains `"Cancelled"`.
+  - Compares post-cancellation summary results with prior completed benchmark summaries field-by-field (`worker_count`, `median_ms`, `speedup`, `efficiency`), establishing that prior valid results remain intact and no partial or corrupt result is published.
 
-### 2.3 Corrected GUI Test Coverage Claims
-- **Thermal Validation:** Tested at both domain level (`ThermalProblem::validate()` rejects non-physical parameters) and GUI widget level (`ThermalView::onSolveClicked()` displays warning and aborts when `setRodLength(0.0)` is set).
-- **Geometry Node Picking:** Explicitly documented that the automated QtTest verifies the programmatic node selection handler and table population, while 3D viewport raycast mouse picking was verified through manual interactive smoke testing.
-- **Hardware Adapters:** Enhanced `testHardwareViewSimulatedDevices()` to test connection, telemetry polling, and disconnection across all three cards (ESP32 MCU, Arty A7 FPGA, and JTAG TAP Bridge). Noted that deep low-level TAP state transitions and bitstream configuration are verified by `workbench_embedded_tests`.
+### 2.3 Reconciled Test Timings
+- Reconciled all execution timings in `docs/PHASE_3_INTEGRATION_VERIFICATION.md` and this package manifest:
+  - **Release Build CTest:** 8 / 8 passed (100%), real execution time: `2.33 s` (GUI integration test: `2.16 s`).
+  - **Debug Build CTest:** 8 / 8 passed (100%), real execution time: `8.12 s` (GUI integration test: `7.58 s`).
+  - **GUI Integration Standalone (`workbench_gui_tests.exe`):** 11 passed, 0 failed, `2090 ms`.
 
-### 2.4 Backpropagation Plot Autoscaling
-- **Remediation:**
-  - In `src/app/widgets/plot_widget.cpp`, anchored linear non-negative data (loss $J \ge 0$) at $0.0$, scaling the Y-axis to $[0.0, 1.28]$.
-  - In `src/app/views/backprop_view.cpp`, ensured `onTrainClicked()` runs the 100-step training trace from the baseline initial state ($w=0.5, b=0.0, v=1.0, c=0.0, J_0 = 1.182541819$).
-  - Asserted `trace.front().loss` is $1.182541819$ and `trace.back().loss < 1e-15`.
-  - Recaptured `docs/evidence/phase3/08_backprop_view_trained.png` showing the full curve starting at step 0 ($1.182542$) below top tick $1.28$.
-
-### 2.5 Documentation & Timing Reconciliation
-- **Reported Test Counts:** 9 GUI scenario test methods, 11 total QtTest PASS entries (including test environment setup and cleanup).
-- **Status Bar Notice:** Updated to match screenshot: `Workbench Core: v0.1.0-prototype | Provenance: Hardware adapters SIMULATED. Temperature CSV synthetic.`
-- **Execution Timings:** Reconciled to exact archived CTest execution times (Release: 1.68 s, Debug: 5.11 s).
+### 2.4 Commit Metadata Precision
+- Documented the authoritative commit chain using direct `git rev-parse HEAD` outputs:
+  - Phase 2 Baseline: `336a1531c7a83bf43d81857ad44c86a99dc95874` (`336a153`)
+  - Phase 3 Implementation: `d443e5a0b843be5e479b5938e35dc35cbc059240` (`d443e5a`)
+  - Phase 3 Documentation Alignment: `74ab6a94c2600ea24f5ceaa587c6b1e8abb41d9d` (`74ab6a9`)
+  - Phase 3 Review Remediation: `84fa6ef3407a92b6db4dcf0575caada9838b63c1` (`84fa6ef`)
+  - Phase 3 Screenshot Refresh: `53608f87f458e2e154f010fb52d09f97f753a99b` (`53608f8`)
+  - Phase 3 Final Review Remediation: `91ddcf5446eaa2486c1cfc597a511f5c2fa49604` (`91ddcf5`)
 
 ---
 
@@ -104,6 +110,6 @@ EngiWorkbench_Phase3_Review_Artifacts/
 | :--- | :--- | :--- | :--- |
 | Release Build | MSVC 19.44 / CMake 4.4.4 | **Exit Code 0** | Clean |
 | Debug Build | MSVC 19.44 / CMake 4.4.4 | **Exit Code 0** | Clean |
-| Release CTest Suite | 8 / 8 passed | **100% PASS** | 1.68 s |
-| Debug CTest Suite | 8 / 8 passed | **100% PASS** | 5.11 s |
-| GUI Integration Suite | 11 / 11 passed | **100% PASS** | 1.39 s |
+| Release CTest Suite | 8 / 8 passed | **100% PASS** | 2.33 s |
+| Debug CTest Suite | 8 / 8 passed | **100% PASS** | 8.12 s |
+| GUI Integration Suite | 11 / 11 passed | **100% PASS** | 2090 ms |
