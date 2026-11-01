@@ -11,5 +11,5 @@ PASS   : GuiIntegrationTest::testHardwareViewSimulatedDevices()
 PASS   : GuiIntegrationTest::testBackpropViewCalculationsAndTraining()
 PASS   : GuiIntegrationTest::testCrossViewSwitchingStability()
 PASS   : GuiIntegrationTest::cleanupTestCase()
-Totals: 11 passed, 0 failed, 0 skipped, 0 blacklisted, 2090ms
+Totals: 11 passed, 0 failed, 0 skipped, 0 blacklisted, 2138ms
 ********* Finished testing of GuiIntegrationTest *********

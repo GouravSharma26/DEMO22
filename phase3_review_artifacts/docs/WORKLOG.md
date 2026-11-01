@@ -853,7 +853,7 @@ Implementation summary:
 - Corrected Thermal GUI Validation Test:
   - Documented GUI positive-input range enforcement: `length_spin_` clamps inputs to `[0.01, 100.0]`. Calling `thermal_view->setRodLength(0.0)` is clamped to `0.01`, verified by `QCOMPARE(thermal_view->rodLength(), 0.01)`.
   - Executed `onSolveClicked()` with the clamped value, verifying that the solver completes cleanly and safely.
-  - Verified domain validation separately using `ThermalProblem::validate()`, confirming rejection of non-positive rod lengths and thermal conductivity.
+  - Verified domain validation separately using `ThermalProblem::validate()`, confirming rejection of negative rod length ($L = -1.0\,\text{m}$), zero thermal conductivity ($k = 0.0\,\text{W/(m}\cdot\text{K)}$), and zero element count ($N = 0$).
 - Deterministic Active-Worker Cancellation Synchronization:
   - Added optional progress callback `std::function<void(size_t worker_count, int repetition)> on_progress = nullptr` to `workbench::batch::run_benchmark` in `src/core/include/workbench/performance/benchmark.hpp` and `src/core/src/performance/benchmark.cpp`, called after warmup and each repetition without altering benchmarking algorithms or numerical math.
   - Added `benchmarkProgress(size_t worker_count, int repetition)` signal to `PerformanceView`.
@@ -863,21 +863,21 @@ Implementation summary:
   - Verified UI state restoration (Run button enabled, Cancel button disabled, status `"Cancelled"`).
   - Compared prior benchmark summaries with post-cancellation summaries field-by-field (`worker_count`, `median_ms`, `speedup`, `efficiency`) to ensure zero partial or corrupted result publication.
 - Test Timing Reconciliation:
-  - Updated `docs/PHASE_3_INTEGRATION_VERIFICATION.md` and build logs with exact execution times: Release CTest 8/8 passed in 2.40 s (GUI test 2.22 s); Debug CTest 8/8 passed in 8.48 s (GUI test 7.69 s).
+  - Updated `docs/PHASE_3_INTEGRATION_VERIFICATION.md` and build logs with exact execution times from authoritative run: Release CTest 8/8 passed in 2.35 s (GUI test 2.18 s); Debug CTest 8/8 passed in 8.30 s (GUI test 7.78 s); standalone QtTest 11/11 passed in 2138 ms.
 - Git Commit Metadata:
-  - Formally documented exact commit history: Phase 2 baseline `336a1534065dd675d0b471be339ff3f3387dc462`, Phase 3 implementation `d443e5a7b67d583095aa62c6d480746654e5904d`, documentation alignment `74ab6a9ed5fa17997a3159fa3e7fe0b8fb4e7751`, review remediation `84fa6ef3407a92b6db4dcf0575caada9838b63c1`, and screenshot refresh `53608f87f458e2e154f010fb52d09f97f753a99b`.
+  - Formally documented exact commit history: Phase 2 baseline `336a1531c7a83bf43d81857ad44c86a99dc95874`, Phase 3 implementation `d443e5a0b843be5e479b5938e35dc35cbc059240`, documentation alignment `74ab6a94c2600ea24f5ceaa587c6b1e8abb41d9d`, review remediation `84fa6ef3407a92b6db4dcf0575caada9838b63c1`, screenshot refresh `53608f87f458e2e154f010fb52d09f97f753a99b`, and review remediation commit `180e03d877093e84bf0edd876b04ee09dced33f6`.
 
 Commands run:
 - `cmake --build --preset windows-msvc-x64-release` (Exit code: 0)
-- `ctest --preset windows-msvc-x64-release --output-on-failure` (Exit code: 0, 8/8 passed, 2.40 s)
+- `ctest --preset windows-msvc-x64-release -V` (Exit code: 0, 8/8 passed, 2.35 s)
 - `cmake --build --preset windows-msvc-x64-debug` (Exit code: 0)
-- `ctest --preset windows-msvc-x64-debug --output-on-failure` (Exit code: 0, 8/8 passed, 8.48 s)
-- `workbench_gui_tests.exe` (Exit code: 0, 11/11 passed, 2124 ms)
+- `ctest --preset windows-msvc-x64-debug -V` (Exit code: 0, 8/8 passed, 8.30 s)
+- `workbench_gui_tests.exe` (Exit code: 0, 11/11 passed, 2138 ms)
 
 Test results:
-- Release CTest: 8/8 passed (100%), real execution time: 2.40 s.
-- Debug CTest: 8/8 passed (100%), real execution time: 8.48 s.
-- GUI Integration Suite (`workbench_gui_tests.exe`): 11/11 tests passed, 0 failed, 2124 ms.
+- Release CTest: 8/8 passed (100%), real execution time: 2.35 s.
+- Debug CTest: 8/8 passed (100%), real execution time: 8.30 s.
+- GUI Integration Suite (`workbench_gui_tests.exe`): 11/11 tests passed, 0 failed, 2138 ms.
 
 Evidence paths:
 - `docs/evidence/phase3/`
@@ -886,6 +886,7 @@ Evidence paths:
 - `EngiWorkbench_Phase3_Review_Artifacts.zip`
 
 Decision made:
+- Synchronize all metadata, logs, and report tables to exact authoritative execution numbers.
 - Stage review artifacts, rebuild `EngiWorkbench_Phase3_Review_Artifacts.zip`, compute SHA-256, test extraction, and upload to DEMO22 repository.
 - Preserve main repository local commit without pushing to origin/main.
 

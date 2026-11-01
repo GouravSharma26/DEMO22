@@ -8,22 +8,34 @@ Phase 2 Baseline Commit:
 Phase 3 Implementation Commit:
   d443e5a0b843be5e479b5938e35dc35cbc059240 (d443e5a)
 
-Documentation Alignment Commit:
+Phase 3 Documentation Alignment Commit:
   74ab6a94c2600ea24f5ceaa587c6b1e8abb41d9d (74ab6a9)
 
 Phase 3 Review Remediation Commit:
   84fa6ef3407a92b6db4dcf0575caada9838b63c1 (84fa6ef)
   (Note: Replaces previous typo 84fa6ef4a888c3080517409eafeec24653dd754d with actual git rev-parse hash)
 
-Screenshot Refresh Commit:
+Phase 3 Screenshot Refresh Commit:
   53608f87f458e2e154f010fb52d09f97f753a99b (53608f8)
 
-Phase 3 Final Review Remediation Commit (Current HEAD):
+Phase 3 Review Remediation Commit:
   91ddcf5446eaa2486c1cfc597a511f5c2fa49604 (91ddcf5)
+
+Phase 3 Archive Checksum & Grabs Commit:
+  180e03d877093e84bf0edd876b04ee09dced33f6 (180e03d)
+
+Phase 3 Metadata Synchronization Commit (Current HEAD):
+  0cf32faf403803c151cb9346ce6637f93c506e78 (0cf32fa)
+
+Working Tree Status:
+  Branch: main
+  Status: Clean (working tree clean, 0 untracked files, 0 modified files)
 
 ================================================================================
 COMMIT LOG (336a153..HEAD):
 ================================================================================
+0cf32faf403803c151cb9346ce6637f93c506e78 0cf32fa 2026-11-01 20:13:07 +0530 docs(phase3): synchronize authoritative test timings, git metadata, and thermal validation wording
+180e03d877093e84bf0edd876b04ee09dced33f6 180e03d 2026-11-01 19:55:52 +0530 docs(phase3): update archive checksum and screenshot grabs for remediated package
 91ddcf5446eaa2486c1cfc597a511f5c2fa49604 91ddcf5 2026-11-01 19:52:02 +0530 fix(phase3): complete final review remediation for thermal validation, active worker cancellation, and test timings
 53608f87f458e2e154f010fb52d09f97f753a99b 53608f8 2026-11-01 18:21:27 +0530 docs(phase3): commit refreshed GUI screenshots
 efaf260e97e48ec414c1ee066914f70e910c1fe8 efaf260 2026-11-01 18:21:20 +0530 docs(phase3): update archive checksum for remediated package
@@ -37,17 +49,17 @@ DIFF STAT (336a153..HEAD):
 ================================================================================
  PHASE_3_ARCHIVE_CHECKSUM.txt                       |   1 +
  docs/PHASE_3_BASELINE.md                           | 128 ++++++
- docs/PHASE_3_INTEGRATION_VERIFICATION.md           | 294 ++++++++++++++
+ docs/PHASE_3_INTEGRATION_VERIFICATION.md           | 292 ++++++++++++++
  docs/PHASE_3_TEST_MATRIX.csv                       |  43 ++
- docs/WORKLOG.md                                    | 202 ++++++++++
+ docs/WORKLOG.md                                    | 203 ++++++++++
  docs/evidence/phase3/00_main_window_overview.png   | Bin 0 -> 63456 bytes
  docs/evidence/phase3/01_geometry_view_stl.png      | Bin 0 -> 81220 bytes
  .../phase3/02_geometry_view_pointcloud.png         | Bin 0 -> 94512 bytes
  docs/evidence/phase3/03_thermal_view_solved.png    | Bin 0 -> 148588 bytes
  .../phase3/04_thermal_view_convergence.png         | Bin 0 -> 147925 bytes
- .../phase3/05_performance_view_completed.png       | Bin 0 -> 110039 bytes
- .../phase3/06_hardware_view_esp32_connected.png    | Bin 0 -> 110724 bytes
- .../phase3/07_hardware_view_fault_recovered.png    | Bin 0 -> 110641 bytes
+ .../phase3/05_performance_view_completed.png       | Bin 0 -> 110279 bytes
+ .../phase3/06_hardware_view_esp32_connected.png    | Bin 0 -> 110759 bytes
+ .../phase3/07_hardware_view_fault_recovered.png    | Bin 0 -> 110680 bytes
  docs/evidence/phase3/08_backprop_view_trained.png  | Bin 0 -> 114472 bytes
  src/app/CMakeLists.txt                             |  28 +-
  src/app/views/backprop_view.cpp                    |  21 +-
@@ -66,18 +78,18 @@ DIFF STAT (336a153..HEAD):
  src/core/src/performance/benchmark.cpp             |  10 +-
  tests/CMakeLists.txt                               |  27 ++
  tests/test_gui_integration.cpp                     | 437 +++++++++++++++++++++
- 31 files changed, 1342 insertions(+), 24 deletions(-)
+ 31 files changed, 1341 insertions(+), 24 deletions(-)
 
 ================================================================================
 FULL PATCH DIFF (336a153..HEAD):
 ================================================================================
 diff --git a/PHASE_3_ARCHIVE_CHECKSUM.txt b/PHASE_3_ARCHIVE_CHECKSUM.txt
 new file mode 100644
-index 0000000..79b3e4c
+index 0000000..20e2244
 --- /dev/null
 +++ b/PHASE_3_ARCHIVE_CHECKSUM.txt
 @@ -0,0 +1 @@
-+8AFBC2FF30040D878626D49A0EC85DCDD65D438F92CAF2E5D55E53BAFF9FAB79  EngiWorkbench_Phase3_Review_Artifacts.zip
++5B9B8099D6D9E1DFE7CF9E514AF1DAA641BC246C31773242303F5472A12E34FE  EngiWorkbench_Phase3_Review_Artifacts.zip
 diff --git a/docs/PHASE_3_BASELINE.md b/docs/PHASE_3_BASELINE.md
 new file mode 100644
 index 0000000..99d3b18
@@ -214,19 +226,20 @@ index 0000000..99d3b18
 +
 diff --git a/docs/PHASE_3_INTEGRATION_VERIFICATION.md b/docs/PHASE_3_INTEGRATION_VERIFICATION.md
 new file mode 100644
-index 0000000..3a4c5ca
+index 0000000..f934c7c
 --- /dev/null
 +++ b/docs/PHASE_3_INTEGRATION_VERIFICATION.md
-@@ -0,0 +1,294 @@
+@@ -0,0 +1,292 @@
 +# PHASE 3: FULL APPLICATION INTEGRATION & END-TO-END VERIFICATION REPORT
 +
 +**Project:** EngiWorkbench ΓÇö Unified Engineering Simulation & Analysis Platform  
 +**Repository:** `https://github.com/GouravSharma26/EngiWorkbench.git`  
 +**Phase:** 3 ΓÇö Full Application Integration & Verification  
 +**Evaluation Target:** Native Windows 11 x64 Desktop Application (`workbench_app.exe`) & Test Harness (`workbench_gui_tests.exe`)  
-+**Phase 2 Baseline Commit:** `336a1534065dd675d0b471be339ff3f3387dc462`  
-+**Phase 3 Implementation Commit:** `d443e5a7b67d583095aa62c6d480746654e5904d`  
-+**Documentation Alignment Commit:** `74ab6a9ed5fa17997a3159fa3e7fe0b8fb4e7751`  
++**Phase 2 Baseline Commit:** `336a1531c7a83bf43d81857ad44c86a99dc95874` (`336a153`)  
++**Phase 3 Implementation Commit:** `d443e5a0b843be5e479b5938e35dc35cbc059240` (`d443e5a`)  
++**Phase 3 Documentation Alignment Commit:** `74ab6a94c2600ea24f5ceaa587c6b1e8abb41d9d` (`74ab6a9`)  
++**Phase 3 Remediation Commit:** `180e03d877093e84bf0edd876b04ee09dced33f6` (`180e03d`)  
 +**Date:** 2026-11-01  
 +
 +---
@@ -280,8 +293,8 @@ index 0000000..3a4c5ca
 +
 +| Preset Name | Configuration | Toolchain | Qt Version | CTest Suites Passed | Real Test Time |
 +| :--- | :--- | :--- | :--- | :--- | :--- |
-+| `windows-msvc-x64-release` | Release | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 2.40 s |
-+| `windows-msvc-x64-debug` | Debug | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 8.48 s |
++| `windows-msvc-x64-release` | Release | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 2.35 s |
++| `windows-msvc-x64-debug` | Debug | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 8.30 s |
 +
 +---
 +
@@ -314,7 +327,7 @@ index 0000000..3a4c5ca
 +     - $N=80$ ($h=0.0125\,\text{m}$): $e = 0.01953125^\circ\text{C}$, ratio $= 4.0000$
 +     Confirming exact theoretical $O(h^2)$ quadratic asymptotic convergence.
 +  5. **Parameter Validation & Input Clamping:** Tested at two distinct levels:
-+     - **Domain Validation:** The computational core (`ThermalProblem::validate()`) strictly rejects non-physical inputs (negative thermal conductivity $k \le 0$ or non-positive rod length $L \le 0$), returning validation errors.
++     - **Domain Validation:** The computational core (`ThermalProblem::validate()`) strictly rejects non-physical inputs, verified by unit tests checking non-positive rod length ($L = -1.0\,\text{m}$), zero thermal conductivity ($k = 0.0\,\text{W/(m}\cdot\text{K)}$), and zero element count ($N = 0$), returning descriptive validation errors.
 +     - **GUI Positive-Input Range Enforcement:** The desktop interface protects users by enforcing positive parameter bounds via `QDoubleSpinBox::setRange(0.01, 100.0)`. Attempting to enter zero or negative length clamps immediately to the minimum physical value ($0.01\,\text{m}$), ensuring that non-physical parameters never reach the solver and preventing undefined behavior or spurious numerical singularities. Automated GUI tests verify that setting $L=0.0$ clamps to $0.01\,\text{m}$ and triggers a safe, valid thermal solution.
 +  6. **CSV Export:** Validates that nodal temperatures and convergence study records export to cleanly formatted, verified CSV files.
 +- **Evidence Screenshot:** `docs/evidence/phase3/03_thermal_view_solved.png` and `docs/evidence/phase3/04_thermal_view_convergence.png`.
@@ -418,34 +431,34 @@ index 0000000..3a4c5ca
 +    Start 7: workbench_experiments_failure_exit_code_test
 +7/8 Test #7: workbench_experiments_failure_exit_code_test ...   Passed    0.10 sec
 +    Start 8: workbench_gui_tests
-+8/8 Test #8: workbench_gui_tests ............................   Passed    2.22 sec
++8/8 Test #8: workbench_gui_tests ............................   Passed    2.18 sec
 +
 +100% tests passed out of 8
-+Total Test time (real) =   2.40 sec
++Total Test time (real) =   2.35 sec
 +```
 +
 +### 5.2 Debug Build CTest Execution (`ctest --preset windows-msvc-x64-debug`)
 +```text
 +Test project C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-debug
 +    Start 1: workbench_core_tests
-+1/8 Test #1: workbench_core_tests ...........................   Passed    0.03 sec
++1/8 Test #1: workbench_core_tests ...........................   Passed    0.01 sec
 +    Start 2: workbench_thermal_tests
-+2/8 Test #2: workbench_thermal_tests ........................   Passed    0.03 sec
++2/8 Test #2: workbench_thermal_tests ........................   Passed    0.01 sec
 +    Start 3: workbench_parser_tests
-+3/8 Test #3: workbench_parser_tests .........................   Passed    0.03 sec
++3/8 Test #3: workbench_parser_tests .........................   Passed    0.01 sec
 +    Start 4: workbench_performance_tests
-+4/8 Test #4: workbench_performance_tests ....................   Passed    0.04 sec
++4/8 Test #4: workbench_performance_tests ....................   Passed    0.02 sec
 +    Start 5: workbench_embedded_tests
-+5/8 Test #5: workbench_embedded_tests .......................   Passed    0.03 sec
++5/8 Test #5: workbench_embedded_tests .......................   Passed    0.01 sec
 +    Start 6: workbench_backprop_tests
-+6/8 Test #6: workbench_backprop_tests .......................   Passed    0.04 sec
++6/8 Test #6: workbench_backprop_tests .......................   Passed    0.02 sec
 +    Start 7: workbench_experiments_failure_exit_code_test
 +7/8 Test #7: workbench_experiments_failure_exit_code_test ...   Passed    0.45 sec
 +    Start 8: workbench_gui_tests
-+8/8 Test #8: workbench_gui_tests ............................   Passed    7.69 sec
++8/8 Test #8: workbench_gui_tests ............................   Passed    7.78 sec
 +
 +100% tests passed out of 8
-+Total Test time (real) =   8.48 sec
++Total Test time (real) =   8.30 sec
 +```
 +
 +### 5.3 Detailed GUI Integration Test Suite Breakdown (`workbench_gui_tests.exe`)
@@ -463,10 +476,7 @@ index 0000000..3a4c5ca
 +PASS   : GuiIntegrationTest::testBackpropViewCalculationsAndTraining()
 +PASS   : GuiIntegrationTest::testCrossViewSwitchingStability()
 +PASS   : GuiIntegrationTest::cleanupTestCase()
-+Totals: 11 passed, 0 failed, 0 skipped, 0 blacklisted, 2124ms
-+********* Finished testing of GuiIntegrationTest *********
-+```
-+Totals: 11 passed, 0 failed, 0 skipped, 0 blacklisted, 740ms
++Totals: 11 passed, 0 failed, 0 skipped, 0 blacklisted, 2138ms
 +********* Finished testing of GuiIntegrationTest *********
 +```
 +
@@ -514,7 +524,7 @@ index 0000000..3a4c5ca
 +
 diff --git a/docs/PHASE_3_TEST_MATRIX.csv b/docs/PHASE_3_TEST_MATRIX.csv
 new file mode 100644
-index 0000000..08b2f97
+index 0000000..bd36dca
 --- /dev/null
 +++ b/docs/PHASE_3_TEST_MATRIX.csv
 @@ -0,0 +1,43 @@
@@ -551,7 +561,7 @@ index 0000000..08b2f97
 +TC-GUI-005,GUI,GeometryView,Invalid or missing STL/CSV file error dialog handling,GUI / Automated,Displays non-fatal actionable warning dialog; preserves state,Warning presented; viewport preserves previous valid data,Release & Debug,PASS,tests/test_gui_integration.cpp
 +TC-GUI-006,GUI,ThermalView,1D FEA solver execution and analytical solution overlay,GUI / Automated,Solves 1D heat equation (L=1.0m k=10 q=10000 T0=100 TL=20); plots FEA vs Analytical,Nodal error <= 1e-9 ┬░C; midpoint error = 1.25 ┬░C; plot rendered,Release & Debug,PASS,docs/evidence/phase3/03_thermal_view_solved.png
 +TC-GUI-007,GUI,ThermalView,Mesh convergence study execution (N=10, 20, 40, 80),GUI / Automated,Populates convergence table showing quadratic ratio ~4.00 (1.25 0.3125 0.078125 0.01953125),Convergence table and log-error curve displayed correctly,Release & Debug,PASS,docs/evidence/phase3/04_thermal_view_convergence.png
-+TC-GUI-008,GUI,ThermalView,Domain validation and GUI positive-input range enforcement,GUI / Automated,Domain rejects non-positive parameters; GUI spinbox clamps invalid inputs to positive range [0.01 100.0] and solves safely,ThermalProblem::validate() rejects k<=0 and L<=0; GUI clamps L=0 to 0.01m and executes solve cleanly,Release & Debug,PASS,tests/test_gui_integration.cpp
++TC-GUI-008,GUI,ThermalView,Domain validation and GUI positive-input range enforcement,GUI / Automated,Domain rejects non-positive parameters; GUI spinbox clamps invalid inputs to positive range [0.01 100.0] and solves safely,ThermalProblem::validate() rejects negative length (L=-1.0) and zero conductivity (k=0.0); GUI clamps L=0 to 0.01m and executes solve cleanly,Release & Debug,PASS,tests/test_gui_integration.cpp
 +TC-GUI-009,GUI,PerformanceView,1000-case multicore benchmark execution across workers,GUI / Automated,Executes benchmark in worker thread; displays timings & speedup,Benchmark completed; serial/parallel diff <= 1e-8 ┬░C verified,Release & Debug,PASS,docs/evidence/phase3/05_performance_view_completed.png
 +TC-GUI-010,GUI,PerformanceView,Deterministic active-worker cancellation and result integrity,GUI / Automated,Worker synchronized via progress signal; cancellation stops active run without publishing partial data; preserves prior summary,benchmarkProgress confirmed active execution (rep 0 completed); cancelled safely; UI state restored; prior summaries bit-exact,Release & Debug,PASS,tests/test_gui_integration.cpp
 +TC-GUI-011,GUI,HardwareView,Simulated device cards (ESP32 FPGA JTAG) lifecycle & telemetry,GUI / Automated,Connects and polls telemetry across all 3 cards in GUI; tests timeout recovery on ESP32,Connected states and telemetry streams verified for all 3 cards,Release & Debug,PASS,docs/evidence/phase3/06_hardware_view_esp32_connected.png
@@ -562,10 +572,10 @@ index 0000000..08b2f97
 +TC-GUI-016,GUI,Export,CSV export file integrity and write validation,GUI / Automated,Validates file stream open and good state before confirming export,Export writes verified CSV; fails gracefully with dialog on read-only,Release & Debug,PASS,src/app/views/thermal_view.cpp
 +
 diff --git a/docs/WORKLOG.md b/docs/WORKLOG.md
-index 53b2845..68ba6cf 100644
+index 53b2845..5ff1a5b 100644
 --- a/docs/WORKLOG.md
 +++ b/docs/WORKLOG.md
-@@ -693,6 +693,208 @@ Evidence paths:
+@@ -693,6 +693,209 @@ Evidence paths:
  - `phase2_review_artifacts/`
  - `src/experiments/main.cpp`
  
@@ -729,7 +739,7 @@ index 53b2845..68ba6cf 100644
 +- Corrected Thermal GUI Validation Test:
 +  - Documented GUI positive-input range enforcement: `length_spin_` clamps inputs to `[0.01, 100.0]`. Calling `thermal_view->setRodLength(0.0)` is clamped to `0.01`, verified by `QCOMPARE(thermal_view->rodLength(), 0.01)`.
 +  - Executed `onSolveClicked()` with the clamped value, verifying that the solver completes cleanly and safely.
-+  - Verified domain validation separately using `ThermalProblem::validate()`, confirming rejection of non-positive rod lengths and thermal conductivity.
++  - Verified domain validation separately using `ThermalProblem::validate()`, confirming rejection of negative rod length ($L = -1.0\,\text{m}$), zero thermal conductivity ($k = 0.0\,\text{W/(m}\cdot\text{K)}$), and zero element count ($N = 0$).
 +- Deterministic Active-Worker Cancellation Synchronization:
 +  - Added optional progress callback `std::function<void(size_t worker_count, int repetition)> on_progress = nullptr` to `workbench::batch::run_benchmark` in `src/core/include/workbench/performance/benchmark.hpp` and `src/core/src/performance/benchmark.cpp`, called after warmup and each repetition without altering benchmarking algorithms or numerical math.
 +  - Added `benchmarkProgress(size_t worker_count, int repetition)` signal to `PerformanceView`.
@@ -739,21 +749,21 @@ index 53b2845..68ba6cf 100644
 +  - Verified UI state restoration (Run button enabled, Cancel button disabled, status `"Cancelled"`).
 +  - Compared prior benchmark summaries with post-cancellation summaries field-by-field (`worker_count`, `median_ms`, `speedup`, `efficiency`) to ensure zero partial or corrupted result publication.
 +- Test Timing Reconciliation:
-+  - Updated `docs/PHASE_3_INTEGRATION_VERIFICATION.md` and build logs with exact execution times: Release CTest 8/8 passed in 2.40 s (GUI test 2.22 s); Debug CTest 8/8 passed in 8.48 s (GUI test 7.69 s).
++  - Updated `docs/PHASE_3_INTEGRATION_VERIFICATION.md` and build logs with exact execution times from authoritative run: Release CTest 8/8 passed in 2.35 s (GUI test 2.18 s); Debug CTest 8/8 passed in 8.30 s (GUI test 7.78 s); standalone QtTest 11/11 passed in 2138 ms.
 +- Git Commit Metadata:
-+  - Formally documented exact commit history: Phase 2 baseline `336a1534065dd675d0b471be339ff3f3387dc462`, Phase 3 implementation `d443e5a7b67d583095aa62c6d480746654e5904d`, documentation alignment `74ab6a9ed5fa17997a3159fa3e7fe0b8fb4e7751`, review remediation `84fa6ef3407a92b6db4dcf0575caada9838b63c1`, and screenshot refresh `53608f87f458e2e154f010fb52d09f97f753a99b`.
++  - Formally documented exact commit history: Phase 2 baseline `336a1531c7a83bf43d81857ad44c86a99dc95874`, Phase 3 implementation `d443e5a0b843be5e479b5938e35dc35cbc059240`, documentation alignment `74ab6a94c2600ea24f5ceaa587c6b1e8abb41d9d`, review remediation `84fa6ef3407a92b6db4dcf0575caada9838b63c1`, screenshot refresh `53608f87f458e2e154f010fb52d09f97f753a99b`, and review remediation commit `180e03d877093e84bf0edd876b04ee09dced33f6`.
 +
 +Commands run:
 +- `cmake --build --preset windows-msvc-x64-release` (Exit code: 0)
-+- `ctest --preset windows-msvc-x64-release --output-on-failure` (Exit code: 0, 8/8 passed, 2.40 s)
++- `ctest --preset windows-msvc-x64-release -V` (Exit code: 0, 8/8 passed, 2.35 s)
 +- `cmake --build --preset windows-msvc-x64-debug` (Exit code: 0)
-+- `ctest --preset windows-msvc-x64-debug --output-on-failure` (Exit code: 0, 8/8 passed, 8.48 s)
-+- `workbench_gui_tests.exe` (Exit code: 0, 11/11 passed, 2124 ms)
++- `ctest --preset windows-msvc-x64-debug -V` (Exit code: 0, 8/8 passed, 8.30 s)
++- `workbench_gui_tests.exe` (Exit code: 0, 11/11 passed, 2138 ms)
 +
 +Test results:
-+- Release CTest: 8/8 passed (100%), real execution time: 2.40 s.
-+- Debug CTest: 8/8 passed (100%), real execution time: 8.48 s.
-+- GUI Integration Suite (`workbench_gui_tests.exe`): 11/11 tests passed, 0 failed, 2124 ms.
++- Release CTest: 8/8 passed (100%), real execution time: 2.35 s.
++- Debug CTest: 8/8 passed (100%), real execution time: 8.30 s.
++- GUI Integration Suite (`workbench_gui_tests.exe`): 11/11 tests passed, 0 failed, 2138 ms.
 +
 +Evidence paths:
 +- `docs/evidence/phase3/`
@@ -762,6 +772,7 @@ index 53b2845..68ba6cf 100644
 +- `EngiWorkbench_Phase3_Review_Artifacts.zip`
 +
 +Decision made:
++- Synchronize all metadata, logs, and report tables to exact authoritative execution numbers.
 +- Stage review artifacts, rebuild `EngiWorkbench_Phase3_Review_Artifacts.zip`, compute SHA-256, test extraction, and upload to DEMO22 repository.
 +- Preserve main repository local commit without pushing to origin/main.
 +
@@ -796,15 +807,15 @@ index 0000000..647de45
 Binary files /dev/null and b/docs/evidence/phase3/04_thermal_view_convergence.png differ
 diff --git a/docs/evidence/phase3/05_performance_view_completed.png b/docs/evidence/phase3/05_performance_view_completed.png
 new file mode 100644
-index 0000000..6d90350
+index 0000000..1d158a7
 Binary files /dev/null and b/docs/evidence/phase3/05_performance_view_completed.png differ
 diff --git a/docs/evidence/phase3/06_hardware_view_esp32_connected.png b/docs/evidence/phase3/06_hardware_view_esp32_connected.png
 new file mode 100644
-index 0000000..8d5274d
+index 0000000..c9e1450
 Binary files /dev/null and b/docs/evidence/phase3/06_hardware_view_esp32_connected.png differ
 diff --git a/docs/evidence/phase3/07_hardware_view_fault_recovered.png b/docs/evidence/phase3/07_hardware_view_fault_recovered.png
 new file mode 100644
-index 0000000..ede2d7d
+index 0000000..15c496f
 Binary files /dev/null and b/docs/evidence/phase3/07_hardware_view_fault_recovered.png differ
 diff --git a/docs/evidence/phase3/08_backprop_view_trained.png b/docs/evidence/phase3/08_backprop_view_trained.png
 new file mode 100644

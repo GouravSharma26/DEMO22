@@ -4,9 +4,10 @@
 **Repository:** `https://github.com/GouravSharma26/EngiWorkbench.git`  
 **Phase:** 3 — Full Application Integration & Verification  
 **Evaluation Target:** Native Windows 11 x64 Desktop Application (`workbench_app.exe`) & Test Harness (`workbench_gui_tests.exe`)  
-**Phase 2 Baseline Commit:** `336a1534065dd675d0b471be339ff3f3387dc462`  
-**Phase 3 Implementation Commit:** `d443e5a7b67d583095aa62c6d480746654e5904d`  
-**Documentation Alignment Commit:** `74ab6a9ed5fa17997a3159fa3e7fe0b8fb4e7751`  
+**Phase 2 Baseline Commit:** `336a1531c7a83bf43d81857ad44c86a99dc95874` (`336a153`)  
+**Phase 3 Implementation Commit:** `d443e5a0b843be5e479b5938e35dc35cbc059240` (`d443e5a`)  
+**Phase 3 Documentation Alignment Commit:** `74ab6a94c2600ea24f5ceaa587c6b1e8abb41d9d` (`74ab6a9`)  
+**Phase 3 Remediation Commit:** `180e03d877093e84bf0edd876b04ee09dced33f6` (`180e03d`)  
 **Date:** 2026-11-01  
 
 ---
@@ -60,8 +61,8 @@ The application and test suite were built and validated under both Microsoft Vis
 
 | Preset Name | Configuration | Toolchain | Qt Version | CTest Suites Passed | Real Test Time |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `windows-msvc-x64-release` | Release | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 2.40 s |
-| `windows-msvc-x64-debug` | Debug | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 8.48 s |
+| `windows-msvc-x64-release` | Release | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 2.35 s |
+| `windows-msvc-x64-debug` | Debug | MSVC 19.44 / CMake 4.4.4 | Qt 6.8.2 MSVC 2022 x64 | **8 / 8 (100%)** | 8.30 s |
 
 ---
 
@@ -94,7 +95,7 @@ The application and test suite were built and validated under both Microsoft Vis
      - $N=80$ ($h=0.0125\,\text{m}$): $e = 0.01953125^\circ\text{C}$, ratio $= 4.0000$
      Confirming exact theoretical $O(h^2)$ quadratic asymptotic convergence.
   5. **Parameter Validation & Input Clamping:** Tested at two distinct levels:
-     - **Domain Validation:** The computational core (`ThermalProblem::validate()`) strictly rejects non-physical inputs (negative thermal conductivity $k \le 0$ or non-positive rod length $L \le 0$), returning validation errors.
+     - **Domain Validation:** The computational core (`ThermalProblem::validate()`) strictly rejects non-physical inputs, verified by unit tests checking non-positive rod length ($L = -1.0\,\text{m}$), zero thermal conductivity ($k = 0.0\,\text{W/(m}\cdot\text{K)}$), and zero element count ($N = 0$), returning descriptive validation errors.
      - **GUI Positive-Input Range Enforcement:** The desktop interface protects users by enforcing positive parameter bounds via `QDoubleSpinBox::setRange(0.01, 100.0)`. Attempting to enter zero or negative length clamps immediately to the minimum physical value ($0.01\,\text{m}$), ensuring that non-physical parameters never reach the solver and preventing undefined behavior or spurious numerical singularities. Automated GUI tests verify that setting $L=0.0$ clamps to $0.01\,\text{m}$ and triggers a safe, valid thermal solution.
   6. **CSV Export:** Validates that nodal temperatures and convergence study records export to cleanly formatted, verified CSV files.
 - **Evidence Screenshot:** `docs/evidence/phase3/03_thermal_view_solved.png` and `docs/evidence/phase3/04_thermal_view_convergence.png`.
@@ -198,34 +199,34 @@ Test project C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-release
     Start 7: workbench_experiments_failure_exit_code_test
 7/8 Test #7: workbench_experiments_failure_exit_code_test ...   Passed    0.10 sec
     Start 8: workbench_gui_tests
-8/8 Test #8: workbench_gui_tests ............................   Passed    2.22 sec
+8/8 Test #8: workbench_gui_tests ............................   Passed    2.18 sec
 
 100% tests passed out of 8
-Total Test time (real) =   2.40 sec
+Total Test time (real) =   2.35 sec
 ```
 
 ### 5.2 Debug Build CTest Execution (`ctest --preset windows-msvc-x64-debug`)
 ```text
 Test project C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-debug
     Start 1: workbench_core_tests
-1/8 Test #1: workbench_core_tests ...........................   Passed    0.03 sec
+1/8 Test #1: workbench_core_tests ...........................   Passed    0.01 sec
     Start 2: workbench_thermal_tests
-2/8 Test #2: workbench_thermal_tests ........................   Passed    0.03 sec
+2/8 Test #2: workbench_thermal_tests ........................   Passed    0.01 sec
     Start 3: workbench_parser_tests
-3/8 Test #3: workbench_parser_tests .........................   Passed    0.03 sec
+3/8 Test #3: workbench_parser_tests .........................   Passed    0.01 sec
     Start 4: workbench_performance_tests
-4/8 Test #4: workbench_performance_tests ....................   Passed    0.04 sec
+4/8 Test #4: workbench_performance_tests ....................   Passed    0.02 sec
     Start 5: workbench_embedded_tests
-5/8 Test #5: workbench_embedded_tests .......................   Passed    0.03 sec
+5/8 Test #5: workbench_embedded_tests .......................   Passed    0.01 sec
     Start 6: workbench_backprop_tests
-6/8 Test #6: workbench_backprop_tests .......................   Passed    0.04 sec
+6/8 Test #6: workbench_backprop_tests .......................   Passed    0.02 sec
     Start 7: workbench_experiments_failure_exit_code_test
 7/8 Test #7: workbench_experiments_failure_exit_code_test ...   Passed    0.45 sec
     Start 8: workbench_gui_tests
-8/8 Test #8: workbench_gui_tests ............................   Passed    7.69 sec
+8/8 Test #8: workbench_gui_tests ............................   Passed    7.78 sec
 
 100% tests passed out of 8
-Total Test time (real) =   8.48 sec
+Total Test time (real) =   8.30 sec
 ```
 
 ### 5.3 Detailed GUI Integration Test Suite Breakdown (`workbench_gui_tests.exe`)
@@ -243,10 +244,7 @@ PASS   : GuiIntegrationTest::testHardwareViewSimulatedDevices()
 PASS   : GuiIntegrationTest::testBackpropViewCalculationsAndTraining()
 PASS   : GuiIntegrationTest::testCrossViewSwitchingStability()
 PASS   : GuiIntegrationTest::cleanupTestCase()
-Totals: 11 passed, 0 failed, 0 skipped, 0 blacklisted, 2124ms
-********* Finished testing of GuiIntegrationTest *********
-```
-Totals: 11 passed, 0 failed, 0 skipped, 0 blacklisted, 740ms
+Totals: 11 passed, 0 failed, 0 skipped, 0 blacklisted, 2138ms
 ********* Finished testing of GuiIntegrationTest *********
 ```
 
