@@ -1,6 +1,6 @@
-# DEMO22 � Independent Evidence & Candidate Submission Repository
+﻿# DEMO22 — Independent Evidence & Candidate Submission Repository
 
-**Project:** PASS Science Works � Unified Engineering Simulation & Analysis Platform (EngiWorkbench)  
+**Project:** PASS Science Works — Unified Engineering Simulation & Analysis Platform (EngiWorkbench)  
 **Main Repository:** https://github.com/GouravSharma26/EngiWorkbench.git  
 **Candidate / Author:** Gourav Sharma  
 **Platform:** Windows 11 x64 (MSVC 2022, Qt 6.8.2)  
@@ -11,16 +11,16 @@
 
 | Artifact | File Name | Size (Bytes) | SHA-256 Checksum | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| **All-Inclusive Candidate Package** | CandidateID_Workbench.zip | 28,274,455 B | `4BCABA5CBCBAA40E3CB836D0FF69FB8D531E95BA4D39DDCB59630AB9EFA86121` | **Authoritative unified submission archive**: Standalone Windows app (Launch.exe, workbench_app.exe, Qt runtime) + full C++ source, CMake, tests, results CSVs, logs, ownership declaration, and screenshots. |
+| **All-Inclusive Candidate Package** | CandidateID_Workbench.zip | 32,011,492 B | `EC1FACFC0101A94C2150B8D3CDFE073A11E44DBA919EB718AD58524619D06BFB` | **Authoritative unified submission archive**: Standalone Windows app (Launch.exe, workbench_app.exe, Qt runtime) + full C++ source, CMake, tests, results CSVs, logs, ownership declaration, and screenshots. |
 | **Standalone Runtime Package** | CandidateID_Workbench_Runtime_v1.zip | 22,339,972 B | `F3C809867D03BBC811FABDFBA428E299C0D955DA9877952B7E2D4334AA8107AA` | Verified 38-file standalone runtime package (tested in relocated directory C:\EngiWorkbench Acceptance Test\Candidate Package\). |
 | **Extracted Runtime Directory** | CandidateID_Workbench/ | 38 files | Verified | Extracted folder containing standalone binaries, Qt plugins, MSVC runtimes, docs, and example assets. |
-| **Phase 3 Review Artifacts** | EngiWorkbench_Phase3_Review_Artifacts.zip | 1,051,816 B | `CA302D8AE6B72D0B9C6DC7DE4A1D9BE4CFBDC71CFE3BAE87922CEB70A21E6278` | Phase 3 application integration and GUI end-to-end verification archive. |
-| **Phase 2 Review Artifacts** | EngiWorkbench_Phase2_Review_Artifacts.zip | 69,513 B | `18D8C3A4BEB92C9372138BE2314603B644DAF851A9CE4A0FE974720DFFBCB2F7` | Phase 2 computational core and numerical verification archive. |
+| **Phase 3 Review Artifacts** | EngiWorkbench_Phase3_Review_Artifacts.zip | 1,051,816 B | `B24C481578637A4FEAB5A66BDC52B8B94A07BAA1DDD90A11EFBC57C31F1F8E07` | Phase 3 application integration and GUI end-to-end verification archive. |
+| **Phase 2 Review Artifacts** | EngiWorkbench_Phase2_Review_Artifacts.zip | 69,513 B | `3D06D21D510E4B22A140C8D47A0AD88E38B8D5DE37E7FEAA5BADDA1693A32710` | Phase 2 computational core and numerical verification archive. |
 
 ---
-# PASS Science Works — Unified Engineering Workbench
+# PASS Science Works â€” Unified Engineering Workbench
 
-**R&D Internship 2026–2027 Engineering Assignment**  
+**R&D Internship 2026â€“2027 Engineering Assignment**  
 **Author:** Gourav Sharma  
 **Version:** v0.1.0-prototype  
 **Target Platform:** Windows 11 x64  
@@ -46,7 +46,7 @@ The application is built strictly following standard C++17 for all core domain l
   - Mouse Wheel: Continuous zoom in and out.
   - Reset View: Fit-to-view bounding-box centering.
 - **Nodal Temperature Point Cloud:** Renders ANSYS-style 3D temperature coordinate fields with continuous smooth false-color colormap gradients (blue $\rightarrow$ cyan $\rightarrow$ green $\rightarrow$ yellow $\rightarrow$ red).
-- **Physical Legend & Proximity Inspection:** Calibrated temperature legend bar displaying values in Celsius (°C). Clicking any point picks the closest node and presents its exact coordinates, ID, and temperature in an inspection table.
+- **Physical Legend & Proximity Inspection:** Calibrated temperature legend bar displaying values in Celsius (Â°C). Clicking any point picks the closest node and presents its exact coordinates, ID, and temperature in an inspection table.
 - **Provenance Transparency:** Bundled temperature data is prominently labeled **SYNTHETIC**; binary STLs are safely rejected with actionable diagnostics.
 
 ### 2. Thermal Analysis View (Task C)
@@ -98,30 +98,30 @@ The application is built strictly following standard C++17 for all core domain l
 
 ```text
 EngiWorkbench/
-├── src/
-│   ├── core/           # PURE C++17 COMPUTATIONAL CORE (ZERO QT HEADERS)
-│   │   ├── domain/     # Physical problems, geometry, solution representations
-│   │   ├── thermal/    # 1D FEA solver, tridiagonal algorithm, analytical solutions
-│   │   ├── io/         # ASCII STL parser, CSV parser, validation models
-│   │   ├── performance/# ThreadPool, parallel batch runner, agreement verifier
-│   │   ├── embedded/   # Mock adapter interfaces, telemetry generator, timeout fault injection
-│   │   └── backprop/   # Handwritten forward pass, analytical gradients, finite differences
-│   │
-│   ├── app/            # QT 6 PRESENTATION LAYER
-│   │   ├── widgets/    # Viewport3D (CAD/point cloud), PlotWidget (2D curves & bars)
-│   │   ├── views/      # GeometryView, ThermalView, PerformanceView, HardwareView, BackpropView
-│   │   ├── main_window # QTabWidget shell, dark theme stylesheet, menu bar, status bar
-│   │   └── main.cpp    # QApplication entry point
-│   │
-│   └── launcher/       # NATIVE WIN32 LAUNCHER (Launch.exe)
-│       └── main.cpp    # Win32 CreateProcessW relative launcher with error dialogs
-│
-├── tests/              # AUTOMATED TEST SUITE (6 CTest test suites, 33 tests)
-├── data/examples/      # Bundled sample STL, synthetic CSV, and manifest.json
-├── results/            # Verified raw CSV benchmark timings, convergence studies, and training logs
-├── scripts/            # Reproducible packaging, launcher build, verification, and submission scripts
-├── docs/               # Specifications, Architecture, Worklog, and Verification Protocol
-└── dist/Workbench/     # Final standalone offline Windows distribution package
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ core/           # PURE C++17 COMPUTATIONAL CORE (ZERO QT HEADERS)
+â”‚   â”‚   â”œâ”€â”€ domain/     # Physical problems, geometry, solution representations
+â”‚   â”‚   â”œâ”€â”€ thermal/    # 1D FEA solver, tridiagonal algorithm, analytical solutions
+â”‚   â”‚   â”œâ”€â”€ io/         # ASCII STL parser, CSV parser, validation models
+â”‚   â”‚   â”œâ”€â”€ performance/# ThreadPool, parallel batch runner, agreement verifier
+â”‚   â”‚   â”œâ”€â”€ embedded/   # Mock adapter interfaces, telemetry generator, timeout fault injection
+â”‚   â”‚   â””â”€â”€ backprop/   # Handwritten forward pass, analytical gradients, finite differences
+â”‚   â”‚
+â”‚   â”œâ”€â”€ app/            # QT 6 PRESENTATION LAYER
+â”‚   â”‚   â”œâ”€â”€ widgets/    # Viewport3D (CAD/point cloud), PlotWidget (2D curves & bars)
+â”‚   â”‚   â”œâ”€â”€ views/      # GeometryView, ThermalView, PerformanceView, HardwareView, BackpropView
+â”‚   â”‚   â”œâ”€â”€ main_window # QTabWidget shell, dark theme stylesheet, menu bar, status bar
+â”‚   â”‚   â””â”€â”€ main.cpp    # QApplication entry point
+â”‚   â”‚
+â”‚   â””â”€â”€ launcher/       # NATIVE WIN32 LAUNCHER (Launch.exe)
+â”‚       â””â”€â”€ main.cpp    # Win32 CreateProcessW relative launcher with error dialogs
+â”‚
+â”œâ”€â”€ tests/              # AUTOMATED TEST SUITE (6 CTest test suites, 33 tests)
+â”œâ”€â”€ data/examples/      # Bundled sample STL, synthetic CSV, and manifest.json
+â”œâ”€â”€ results/            # Verified raw CSV benchmark timings, convergence studies, and training logs
+â”œâ”€â”€ scripts/            # Reproducible packaging, launcher build, verification, and submission scripts
+â”œâ”€â”€ docs/               # Specifications, Architecture, Worklog, and Verification Protocol
+â””â”€â”€ dist/Workbench/     # Final standalone offline Windows distribution package
 ```
 
 ---

@@ -12,8 +12,9 @@ GUI: Qt 6.8.2 MSVC 2022 64-bit
 1. Authoritative All-Inclusive Candidate Submission Package
 --------------------------------------------------------------------------------
 File: CandidateID_Workbench.zip
-Size: 28,274,455 bytes (26.96 MB)
-SHA-256: 4BCABA5CBCBAA40E3CB836D0FF69FB8D531E95BA4D39DDCB59630AB9EFA86121
+Size: 32,011,492 bytes (30.53 MB)
+SHA-256: EC1FACFC0101A94C2150B8D3CDFE073A11E44DBA919EB718AD58524619D06BFB
+Format Hygiene: 174 file entries with conventional forward-slash (/) paths; 100% CRC verified
 Scope: Unified submission archive containing:
   - Standalone Windows application at root (Launch.exe, workbench_app.exe, workbench_experiments.exe, workbench_gui_tests.exe)
   - Deployed Qt 6.8.2 and MSVC 2022 dynamic runtimes (platforms/, styles/, imageformats/, etc.)
@@ -26,6 +27,7 @@ Scope: Unified submission archive containing:
   - Intellectual property, code ownership, and third-party notices (OWNERSHIP.md, THIRD_PARTY_NOTICES.md)
   - Complete Git commit history and offline repository bundle (COMMIT_HISTORY.txt, EngiWorkbench.bundle)
   - Comprehensive package manifest (MANIFEST.txt)
+  - Final demonstration walkthrough script (docs/DEMO_SCRIPT.md; live video pending human walkthrough)
 
 --------------------------------------------------------------------------------
 2. Standalone Runtime Distribution (Relocation-Tested Baseline)
@@ -36,13 +38,13 @@ SHA-256: F3C809867D03BBC811FABDFBA428E299C0D955DA9877952B7E2D4334AA8107AA
 Scope: Runtime-only standalone deployment (38 files across 9 directories) tested in relocated directory.
 
 --------------------------------------------------------------------------------
-3. Preserved Phase Review Artifacts
+3. Preserved Phase Review Artifacts (Recalculated Checksums)
 --------------------------------------------------------------------------------
 File: EngiWorkbench_Phase2_Review_Artifacts.zip
 Size: 69,513 bytes
-SHA-256: 18D8C3A4BEB92C9372138BE2314603B644DAF851A9CE4A0FE974720DFFBCB2F7
+SHA-256: 3D06D21D510E4B22A140C8D47A0AD88E38B8D5DE37E7FEAA5BADDA1693A32710
 
 File: EngiWorkbench_Phase3_Review_Artifacts.zip
 Size: 1,051,816 bytes
-SHA-256: CA302D8AE6B72D0B9C6DC7DE4A1D9BE4CFBDC71CFE3BAE87922CEB70A21E6278
+SHA-256: B24C481578637A4FEAB5A66BDC52B8B94A07BAA1DDD90A11EFBC57C31F1F8E07
 ================================================================================
