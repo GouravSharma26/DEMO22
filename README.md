@@ -1,3 +1,23 @@
+# DEMO22 — Independent Evidence & Candidate Submission Repository
+
+**Project:** PASS Science Works — Unified Engineering Simulation & Analysis Platform (EngiWorkbench)  
+**Main Repository:** https://github.com/GouravSharma26/EngiWorkbench.git  
+**Candidate / Author:** Gourav Sharma  
+**Platform:** Windows 11 x64 (MSVC 2022, Qt 6.8.2)  
+
+---
+
+## Repository Artifacts & Checksums
+
+| Artifact | File Name | Size (Bytes) | SHA-256 Checksum | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| **All-Inclusive Candidate Package** | CandidateID_Workbench.zip | 28,274,455 B | `4BCABA5CBCBAA40E3CB836D0FF69FB8D531E95BA4D39DDCB59630AB9EFA86121` | **Authoritative unified submission archive**: Standalone Windows app (Launch.exe, workbench_app.exe, Qt runtime) + full C++ source, CMake, tests, results CSVs, logs, ownership declaration, and screenshots. |
+| **Standalone Runtime Package** | CandidateID_Workbench_Runtime_v1.zip | 22,339,972 B | `F3C809867D03BBC811FABDFBA428E299C0D955DA9877952B7E2D4334AA8107AA` | Verified 38-file standalone runtime package (tested in relocated directory C:\EngiWorkbench Acceptance Test\Candidate Package\). |
+| **Extracted Runtime Directory** | CandidateID_Workbench/ | 38 files | Verified | Extracted folder containing standalone binaries, Qt plugins, MSVC runtimes, docs, and example assets. |
+| **Phase 3 Review Artifacts** | EngiWorkbench_Phase3_Review_Artifacts.zip | 1,051,816 B | `CA302D8AE6B72D0B9C6DC7DE4A1D9BE4CFBDC71CFE3BAE87922CEB70A21E6278` | Phase 3 application integration and GUI end-to-end verification archive. |
+| **Phase 2 Review Artifacts** | EngiWorkbench_Phase2_Review_Artifacts.zip | 69,513 B | `18D8C3A4BEB92C9372138BE2314603B644DAF851A9CE4A0FE974720DFFBCB2F7` | Phase 2 computational core and numerical verification archive. |
+
+---
 # PASS Science Works â€” Unified Engineering Workbench
 
 **R&D Internship 2026â€“2027 Engineering Assignment**  

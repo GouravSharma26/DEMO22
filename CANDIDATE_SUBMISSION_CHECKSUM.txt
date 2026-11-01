@@ -1,0 +1,48 @@
+================================================================================
+CANDIDATE SUBMISSION ARCHIVE CHECKSUMS & ARTIFACT INDEX
+================================================================================
+
+Project: PASS Science Works — Unified Engineering Simulation & Analysis Platform (EngiWorkbench)
+Author: Gourav Sharma
+Target Platform: Windows 11 x64
+Compiler: MSVC 2022 (v19.44.35228.0)
+GUI: Qt 6.8.2 MSVC 2022 64-bit
+
+--------------------------------------------------------------------------------
+1. Authoritative All-Inclusive Candidate Submission Package
+--------------------------------------------------------------------------------
+File: CandidateID_Workbench.zip
+Size: 28,274,455 bytes (26.96 MB)
+SHA-256: 4BCABA5CBCBAA40E3CB836D0FF69FB8D531E95BA4D39DDCB59630AB9EFA86121
+Scope: Unified submission archive containing:
+  - Standalone Windows application at root (Launch.exe, workbench_app.exe, workbench_experiments.exe, workbench_gui_tests.exe)
+  - Deployed Qt 6.8.2 and MSVC 2022 dynamic runtimes (platforms/, styles/, imageformats/, etc.)
+  - Complete C++ source tree (src/app/, src/core/, src/experiments/, src/launcher/)
+  - Complete CMake build configuration (CMakeLists.txt, CMakePresets.json)
+  - Complete test suites (tests/test_*.cpp)
+  - Verified numerical experimental CSVs (results/*.csv)
+  - Execution traces and phase reports (results/logs/, docs/PHASE_*)
+  - Full documentation, checklists, architecture, and evidence screenshots (docs/)
+  - Intellectual property, code ownership, and third-party notices (OWNERSHIP.md, THIRD_PARTY_NOTICES.md)
+  - Complete Git commit history and offline repository bundle (COMMIT_HISTORY.txt, EngiWorkbench.bundle)
+  - Comprehensive package manifest (MANIFEST.txt)
+
+--------------------------------------------------------------------------------
+2. Standalone Runtime Distribution (Relocation-Tested Baseline)
+--------------------------------------------------------------------------------
+File: CandidateID_Workbench_Runtime_v1.zip
+Size: 22,339,972 bytes (21.30 MB)
+SHA-256: F3C809867D03BBC811FABDFBA428E299C0D955DA9877952B7E2D4334AA8107AA
+Scope: Runtime-only standalone deployment (38 files across 9 directories) tested in relocated directory.
+
+--------------------------------------------------------------------------------
+3. Preserved Phase Review Artifacts
+--------------------------------------------------------------------------------
+File: EngiWorkbench_Phase2_Review_Artifacts.zip
+Size: 69,513 bytes
+SHA-256: 18D8C3A4BEB92C9372138BE2314603B644DAF851A9CE4A0FE974720DFFBCB2F7
+
+File: EngiWorkbench_Phase3_Review_Artifacts.zip
+Size: 1,051,816 bytes
+SHA-256: CA302D8AE6B72D0B9C6DC7DE4A1D9BE4CFBDC71CFE3BAE87922CEB70A21E6278
+================================================================================
