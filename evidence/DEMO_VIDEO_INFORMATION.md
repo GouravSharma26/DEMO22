@@ -30,12 +30,10 @@ In accordance with GitHub's file size policy (strict 100 MB per-file upload limi
 
 The original demonstration video recording is preserved locally in the following authoritative workspace locations:
 
-1. **Repository Root:**
-   `c:\Gourav Sharma\work\EngiWorkbench\Screen Recording 2026-11-02 072049.mp4`
-2. **Evidence Subdirectory:**
+1. **Evidence Subdirectory (Canonical Repository Location):**
    `c:\Gourav Sharma\work\EngiWorkbench\docs\evidence\video\Screen Recording 2026-11-02 072049.mp4`
-3. **Comprehensive Candidate Submission ZIP:**
-   `c:\Gourav Sharma\work\EngiWorkbench\CandidateID_Workbench.zip`
+2. **Comprehensive Candidate Submission ZIP:**
+   `c:\Gourav Sharma\work\EngiWorkbench\dist\archives\CandidateID_Workbench.zip`
    - Archive Size: `115,283,696 bytes` (109.94 MB)
    - SHA-256: `2EB5261DAC7F445AA0363611ED04C8498DB2EE9E02E50496BAAF2C55F46FAFF9`
    - Archive Internal Entry Path: `docs/evidence/video/Screen Recording 2026-11-02 072049.mp4`
@@ -75,3 +73,4 @@ The demonstration video provides a complete end-to-end walkthrough of all five f
    - Central finite-difference gradient verification with $\varepsilon = 10^{-6}$ (max relative error $3.25\times 10^{-8} \le 10^{-5}$).
    - 100-step gradient descent training run, strictly monotonic loss decrease ($E_{100} = 0.00392305$).
    - Training loss progression curve and live weight update inspection.
+
