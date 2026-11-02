@@ -9,13 +9,15 @@ Compiler: MSVC 2022 (v19.44.35228.0)
 GUI: Qt 6.8.2 MSVC 2022 64-bit
 
 --------------------------------------------------------------------------------
-1. Authoritative All-Inclusive Candidate Submission Package
+1. Authoritative Candidate Submission Packages
 --------------------------------------------------------------------------------
+
+A. GitHub All-Inclusive Submission Package (Under 100 MB Limit):
 File: CandidateID_Workbench.zip
-Size: 36,069,013 bytes (34.40 MB)
-SHA-256: 17A75B30F13833982C4FC8C0A5BD69FAC0423786ACE5B5B4F0E2FCE90A189EFA
-Format Hygiene: 174 file entries with conventional forward-slash (/) paths; 100% CRC verified
-Scope: Unified submission archive containing:
+Size: 42,702,451 bytes (40.72 MB)
+SHA-256: AD79E18A51DDD4DA57FF5247594A30A1B50DB543D71ACDFCC39204080AA78AC3
+Format Hygiene: 214 file entries with conventional forward-slash (/) paths; 100% CRC verified
+Contents:
   - Standalone Windows application at root (Launch.exe, workbench_app.exe, workbench_experiments.exe, workbench_gui_tests.exe)
   - Deployed Qt 6.8.2 and MSVC 2022 dynamic runtimes (platforms/, styles/, imageformats/, etc.)
   - Complete C++ source tree (src/app/, src/core/, src/experiments/, src/launcher/)
@@ -24,13 +26,61 @@ Scope: Unified submission archive containing:
   - Verified numerical experimental CSVs (results/*.csv)
   - Execution traces and phase reports (results/logs/, docs/PHASE_*)
   - Full documentation, checklists, architecture, and evidence screenshots (docs/)
+  - Comprehensive Acceptance Evidence Log (docs/evidence/EVIDENCE_LOG.md)
+  - 24 Acceptance Screenshots (docs/evidence/screenshots/*.png)
+  - 9 Exported Acceptance CSVs (docs/evidence/csv/*.csv)
+  - 2-Page Handwritten Derivation Assignment (Handwritten.pdf & docs/evidence/assignment/Handwritten.pdf)
+  - Demonstration Video Documentation Pointer (docs/evidence/video/DEMO_VIDEO_INFORMATION.md)
   - Intellectual property, code ownership, and third-party notices (OWNERSHIP.md, THIRD_PARTY_NOTICES.md)
   - Complete Git commit history and offline repository bundle (COMMIT_HISTORY.txt, EngiWorkbench.bundle)
-  - Comprehensive package manifest (MANIFEST.txt)
-  - Final demonstration walkthrough script (docs/DEMO_SCRIPT.md; live video pending human walkthrough)
+  - Comprehensive package manifest and layout index (MANIFEST.txt, PACK_CONTENTS.md)
+
+B. Local Comprehensive Package (with Embedded Demonstration Video):
+File: CandidateID_Workbench.zip (Local Workstation)
+Size: 115,283,696 bytes (109.94 MB)
+SHA-256: 2EB5261DAC7F445AA0363611ED04C8498DB2EE9E02E50496BAAF2C55F46FAFF9
+Format Hygiene: 212 file entries with conventional forward-slash (/) paths; 100% CRC verified
+Embedded Video Entry: docs/evidence/video/Screen Recording 2026-11-02 072049.mp4 (72,585,675 bytes Deflate compressed)
 
 --------------------------------------------------------------------------------
-2. Standalone Runtime Distribution (Relocation-Tested Baseline)
+2. Standalone Acceptance Evidence Assets (Individual Files)
+--------------------------------------------------------------------------------
+
+A. Live Demonstration Video Recording:
+File: Screen Recording 2026-11-02 072049.mp4
+Size: 572,798,653 bytes (546.26 MB)
+SHA-256: FADE6064EA356941BE44F7CABEB540E2D0805DC19667C3E1EB6F0A8D30575A9C
+Duration: 00:09:05 (9 minutes, 5 seconds)
+Resolution / Format: 1920x1080 @ 30.00 fps, H.264 / AAC (ISO/IEC 14496-14 MP4)
+Local Paths:
+  - c:\Gourav Sharma\work\EngiWorkbench\Screen Recording 2026-11-02 072049.mp4
+  - c:\Gourav Sharma\work\EngiWorkbench\docs\evidence\video\Screen Recording 2026-11-02 072049.mp4
+Playback Verification: 100% Playable and verified across Windows Media Player and VLC.
+
+B. Handwritten Mathematical Derivation Assignment:
+File: Handwritten.pdf
+Size: 2,016,025 bytes (1.92 MB)
+SHA-256: 81CA78F971ACDAF0571127AC85F24B47B8C52AE0B68AA52DF3D9D6423E8C194A
+Pages: 2 pages (Backpropagation Chain Rule Derivations & 1D FEA Weak Form)
+Repository Paths:
+  - DEMO22/evidence/assignment/Handwritten.pdf
+  - DEMO22/CandidateID_Workbench/Handwritten.pdf
+  - DEMO22/CandidateID_Workbench/docs/evidence/assignment/Handwritten.pdf
+
+C. Comprehensive Acceptance Evidence Log:
+File: EVIDENCE_LOG.md
+Size: 27,654 bytes
+SHA-256: Calculated upon commit
+Repository Path: DEMO22/evidence/EVIDENCE_LOG.md
+
+D. 24 Acceptance Screenshots:
+Directory: DEMO22/evidence/screenshots/ (24 PNG files, 3,138,409 bytes total)
+
+E. 9 Verified Numerical CSV Result Exports:
+Directory: DEMO22/evidence/csv/ (9 CSV files, 151,802 bytes total)
+
+--------------------------------------------------------------------------------
+3. Standalone Runtime Distribution (Relocation-Tested Baseline)
 --------------------------------------------------------------------------------
 File: CandidateID_Workbench_Runtime_v1.zip
 Size: 22,339,972 bytes (21.30 MB)
@@ -38,7 +88,7 @@ SHA-256: F3C809867D03BBC811FABDFBA428E299C0D955DA9877952B7E2D4334AA8107AA
 Scope: Runtime-only standalone deployment (38 files across 9 directories) tested in relocated directory.
 
 --------------------------------------------------------------------------------
-3. Preserved Phase Review Artifacts (Recalculated Checksums)
+4. Preserved Phase Review Artifacts (Untouched Baseline Checksums)
 --------------------------------------------------------------------------------
 File: EngiWorkbench_Phase2_Review_Artifacts.zip
 Size: 69,513 bytes

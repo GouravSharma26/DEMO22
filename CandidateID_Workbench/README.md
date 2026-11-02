@@ -38,7 +38,7 @@ The application is built strictly following standard C++17 for all core domain l
 ### 3. Performance View (Task D)
 - **Reproducible Multicore Benchmark:** Benchmarks batches of independent thermal FEA cases generated deterministically using a fixed-seed Mersenne Twister RNG (`std::mt19937`).
 - **Standard Library Worker Pool:** Powered by a bounded C++17 `ThreadPool` using condition-variable work queues and atomic dynamic scheduling.
-- **Rigorous 5-Repetition Protocol:** Executes 1 unmeasured warm-up cycle followed by 5 timed repetitions per worker count ($p \in \{1, 2, 4\}$). Computes median wall-clock time, speedup factor $S_p = T_1 / T_p$, and parallel efficiency $E_p = S_p / p$.
+- **Rigorous 5-Repetition Protocol:** Executes 1 unmeasured warm-up cycle followed by 5 timed repetitions per worker count ($p \in \{1, 2, 3, 4\}$). Computes median wall-clock time, speedup factor $S_p = T_1 / T_p$, and parallel efficiency $E_p = S_p / p$.
 - **Numerical Output Agreement:** Verifies that serial and parallel execution order yields deterministic results and identical temperatures within $\max |T_{\text{serial}} - T_{\text{parallel}}| \le 10^{-8\ \circ}\text{C}$.
 - **Responsive Execution & Safe Cancellation:** Workloads run on background threads; atomic cancellation halts pending tasks immediately without publishing partial or corrupted datasets.
 
@@ -96,19 +96,19 @@ EngiWorkbench/
 │   └── launcher/       # NATIVE WIN32 LAUNCHER (Launch.exe)
 │       └── main.cpp    # Win32 CreateProcessW relative launcher with error dialogs
 │
-├── tests/              # AUTOMATED TEST SUITE (6 CTest test suites, 33 tests)
+├── tests/              # AUTOMATED TEST SUITE (8 CTest suites, Catch2 & QtTest integration)
 ├── data/examples/      # Bundled sample STL, synthetic CSV, and manifest.json
 ├── results/            # Verified raw CSV benchmark timings, convergence studies, and training logs
 ├── scripts/            # Reproducible packaging, launcher build, verification, and submission scripts
 ├── docs/               # Specifications, Architecture, Worklog, and Verification Protocol
-└── dist/Workbench/     # Final standalone offline Windows distribution package
+└── dist/CandidateID_Workbench/ # Final standalone offline Windows distribution package
 ```
 
 ---
 
 ## 5. Standalone Execution (One-Click Offline Launch)
 
-The standalone application is deployed in `dist/Workbench/` (and archived in `CandidateID_Workbench.zip`).
+The standalone application is deployed in `dist/CandidateID_Workbench/` (and archived in `CandidateID_Workbench.zip`).
 
 ### To Run:
 1. Extract `CandidateID_Workbench.zip` to any local folder (paths with spaces supported, e.g., `C:\Engineering Workbench`).
@@ -154,27 +154,40 @@ powershell -ExecutionPolicy Bypass -File scripts/create_submission.ps1
 Both Release and Debug configurations have been executed and verified via CTest:
 
 ```text
-Test project .../build/windows-msvc-x64-release
+Test project C:/Gourav Sharma/work/EngiWorkbench/build/windows-msvc-x64-release
     Start 1: workbench_core_tests
-1/6 Test #1: workbench_core_tests .............   Passed    0.01 sec
+1/8 Test #1: workbench_core_tests .............................   Passed    0.02 sec
     Start 2: workbench_thermal_tests
-2/6 Test #2: workbench_thermal_tests ..........   Passed    0.01 sec
+2/8 Test #2: workbench_thermal_tests ..........................   Passed    0.02 sec
     Start 3: workbench_parser_tests
-3/6 Test #3: workbench_parser_tests ...........   Passed    0.03 sec
+3/8 Test #3: workbench_parser_tests ...........................   Passed    0.02 sec
     Start 4: workbench_performance_tests
-4/6 Test #4: workbench_performance_tests ......   Passed    0.01 sec
+4/8 Test #4: workbench_performance_tests ......................   Passed    0.28 sec
     Start 5: workbench_embedded_tests
-5/6 Test #5: workbench_embedded_tests .........   Passed    0.01 sec
+5/8 Test #5: workbench_embedded_tests .........................   Passed    0.28 sec
     Start 6: workbench_backprop_tests
-6/6 Test #6: workbench_backprop_tests .........   Passed    0.01 sec
+6/8 Test #6: workbench_backprop_tests .........................   Passed    0.02 sec
+    Start 7: workbench_experiments_failure_exit_code_test
+7/8 Test #7: workbench_experiments_failure_exit_code_test .....   Passed    0.41 sec
+    Start 8: workbench_gui_tests
+8/8 Test #8: workbench_gui_tests ..............................   Passed    1.81 sec
 
-100% tests passed out of 6 (33 of 33 individual assertions passed)
+100% tests passed, 0 tests failed out of 8
+Total Test time (real) =   2.86 sec
 ```
 
-### Numerical Criteria Summary:
-- **Thermal Convergence Ratio:** $4.0000$ across $N=10, 20, 40, 80$ (exact $O(h^2)$).
-- **Thermal Nodal Error:** $\le 10^{-9\ \circ}\text{C}$ (superconvergence at mesh vertices).
-- **Multicore Agreement:** $\max |T_{\text{serial}} - T_{\text{parallel}}| = 0.00 \times 10^{-00}\ ^\circ\text{C} \le 10^{-8\ \circ}\text{C}$.
+### Verification & Test Structure Summary:
+- **CTest Release Suites:** 8/8 suites passed (100% pass rate) in 2.86 s of real execution time.
+- **Phase 3 Integration Test Matrix:** 41 distinct end-to-end integration and verification rows documented in `docs/PHASE_3_TEST_MATRIX.csv`.
+- **Standalone GUI Test Harness (`workbench_gui_tests`):** 9 actual GUI scenario test methods (`testMainWindowCreationAndTabs`, `testGeometryViewStlAndCsv`, `testGeometryViewInvalidFileHandling`, `testThermalViewSolveAndConvergence`, `testThermalViewParameterValidation`, `testPerformanceViewExecutionAndCancellation`, `testHardwareViewSimulatedDevices`, `testBackpropViewCalculationsAndTraining`, `testCrossViewSwitchingStability`) plus test setup (`initTestCase`) and cleanup (`cleanupTestCase`), yielding 11 passed QtTest entries (1810 ms).
+- **Thermal Convergence Ratio:** $4.0000$ across $N=10, 20, 40, 80$ (exact theoretical $O(h^2)$).
+- **Thermal Nodal Error:** $\le 10^{-9\ \circ}\text{C}$ (nodal superconvergence at mesh vertices).
+- **Multicore Agreement:** $\max |T_{\text{serial}} - T_{\text{parallel}}| = 0.00 \times 10^{-00}\ ^\circ\text{C} \le 10^{-8\ \circ}\text{C}$ across 1,000 cases.
+- **Multicore Benchmark Summary (`results/benchmark_1000cases_summary.csv`):**
+  - $p=1$: Median $2.8618\text{ ms}$, Speedup $1.0000$, Efficiency $100.00\%$
+  - $p=2$: Median $2.2033\text{ ms}$, Speedup $1.2989$, Efficiency $64.94\%$
+  - $p=3$: Median $1.7766\text{ ms}$, Speedup $1.6108$, Efficiency $53.69\%$
+  - $p=4$: Median $1.7974\text{ ms}$, Speedup $1.5922$, Efficiency $39.80\%$
 - **Backprop Gradient Check:** Maximum absolute error $1.13 \times 10^{-10} \le 10^{-5}$ at $\epsilon = 10^{-6}$.
 - **Backprop Training:** Monotonic loss descent from $J_0 = 1.182542$ to $J_{100} = 1.70 \times 10^{-20}$.
 

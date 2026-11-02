@@ -1,4 +1,4 @@
-﻿# DEMO22 — Independent Evidence & Candidate Submission Repository
+# DEMO22 — Independent Evidence & Candidate Submission Repository
 
 **Project:** PASS Science Works — Unified Engineering Simulation & Analysis Platform (EngiWorkbench)  
 **Main Repository:** https://github.com/GouravSharma26/EngiWorkbench.git  
@@ -11,9 +11,13 @@
 
 | Artifact | File Name | Size (Bytes) | SHA-256 Checksum | Description |
 | :--- | :--- | :--- | :--- | :--- |
-| **All-Inclusive Candidate Package** | CandidateID_Workbench.zip | 36,069,013 B | `17A75B30F13833982C4FC8C0A5BD69FAC0423786ACE5B5B4F0E2FCE90A189EFA` | **Authoritative unified submission archive**: Standalone Windows app (Launch.exe, workbench_app.exe, Qt runtime) + full C++ source, CMake, tests, results CSVs, logs, ownership declaration, and screenshots. |
-| **Standalone Runtime Package** | CandidateID_Workbench_Runtime_v1.zip | 22,339,972 B | `F3C809867D03BBC811FABDFBA428E299C0D955DA9877952B7E2D4334AA8107AA` | Verified 38-file standalone runtime package (tested in relocated directory C:\EngiWorkbench Acceptance Test\Candidate Package\). |
-| **Extracted Runtime Directory** | CandidateID_Workbench/ | 38 files | Verified | Extracted folder containing standalone binaries, Qt plugins, MSVC runtimes, docs, and example assets. |
+| **All-Inclusive Candidate Package (GitHub)** | CandidateID_Workbench.zip | 42,702,451 B | `AD79E18A51DDD4DA57FF5247594A30A1B50DB543D71ACDFCC39204080AA78AC3` | **Authoritative unified submission archive (214 entries, forward-slash hygiene)**: Standalone Windows app (Launch.exe, workbench_app.exe, Qt runtime) + full C++ source, CMake, tests, results CSVs, acceptance screenshots, handwritten assignment, evidence log, and demo script. |
+| **Local All-Inclusive Archive (with Video)** | CandidateID_Workbench.zip (Local) | 115,283,696 B | `2EB5261DAC7F445AA0363611ED04C8498DB2EE9E02E50496BAAF2C55F46FAFF9` | Local comprehensive archive with embedded 572 MB demonstration video (72.6 MB Deflate). Stored locally due to GitHub 100 MB per-file upload limit. |
+| **Live Demonstration Video Recording** | `Screen Recording 2026-11-02 072049.mp4` | 572,798,653 B | `FADE6064EA356941BE44F7CABEB540E2D0805DC19667C3E1EB6F0A8D30575A9C` | Verified 9-minute Full HD recording (`00:09:05`, 1920x1080 @ 30 fps, H.264/AAC). Documented in `evidence/DEMO_VIDEO_INFORMATION.md`. |
+| **Handwritten Assignment** | `Handwritten.pdf` | 2,016,025 B | `81CA78F971ACDAF0571127AC85F24B47B8C52AE0B68AA52DF3D9D6423E8C194A` | 2-page handwritten mathematical derivations (backpropagation chain rule and 1D thermal FEA). Available at `evidence/assignment/Handwritten.pdf`. |
+| **Acceptance Evidence Directory** | `evidence/` | 38 items | Verified | Complete evidence suite: 24 screenshots, 9 exported CSVs, Handwritten.pdf, EVIDENCE_LOG.md, and DEMO_VIDEO_INFORMATION.md. |
+| **Standalone Runtime Package** | CandidateID_Workbench_Runtime_v1.zip | 22,339,972 B | `F3C809867D03BBC811FABDFBA428E299C0D955DA9877952B7E2D4334AA8107AA` | Verified 38-file standalone runtime package (tested in relocated directory `C:\EngiWorkbench Acceptance Test\Candidate Package\`). |
+| **Extracted Runtime Directory** | CandidateID_Workbench/ | 40 files | Verified | Extracted folder containing standalone binaries, Qt plugins, MSVC runtimes, docs, Handwritten.pdf, and example assets. |
 | **Phase 3 Review Artifacts** | EngiWorkbench_Phase3_Review_Artifacts.zip | 1,051,816 B | `B24C481578637A4FEAB5A66BDC52B8B94A07BAA1DDD90A11EFBC57C31F1F8E07` | Phase 3 application integration and GUI end-to-end verification archive. |
 | **Phase 2 Review Artifacts** | EngiWorkbench_Phase2_Review_Artifacts.zip | 69,513 B | `3D06D21D510E4B22A140C8D47A0AD88E38B8D5DE37E7FEAA5BADDA1693A32710` | Phase 2 computational core and numerical verification archive. |
 

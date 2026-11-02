@@ -1,5 +1,5 @@
 ================================================================================
-ENGIWORKBENCH — RELEASE PACKAGE MANIFEST
+ENGIWORKBENCH — COMPREHENSIVE SUBMISSION PACKAGE MANIFEST
 ================================================================================
 
 Project Name:
@@ -23,14 +23,21 @@ Compiler Toolchain:
 GUI Framework:
   Qt 6.8.2 MSVC 2022 64-bit (Dynamic Linking under LGPLv3)
 
-Package Creation Date:
-  2026-11-01
+Package Scope:
+  Unified All-Inclusive Submission Archive:
+  1. Standalone Windows runtime application at root (zero-install, double-click Launch.exe).
+  2. Complete C++ source tree and CMake build configuration.
+  3. Comprehensive unit, numerical, integration, and QtTest GUI test suites.
+  4. Native experimental verification CSV datasets and execution logs.
+  5. Full engineering reports, specifications, checklists, and visual evidence.
+  6. Intellectual property, code ownership, and third-party notices.
+  7. Git commit history and complete offline repository bundle.
 
 Target Platform:
   Microsoft Windows 10 / Windows 11 x64 (Offline, Zero-Install, Standalone)
 
 ================================================================================
-INCLUDED EXECUTABLES & RUNTIME BINARIES
+1. ROOT EXECUTABLES & STANDALONE RUNTIME BINARIES
 ================================================================================
 
 1. Launch.exe:
@@ -47,14 +54,14 @@ INCLUDED EXECUTABLES & RUNTIME BINARIES
 
 3. workbench_experiments.exe:
    - Role: Native C++ headless experiment and verification runner (173 KB).
-   - Capability: Generates all numerical verification CSVs independently of Qt GUI.
+   - Capability: Generates and validates all numerical CSVs independently of Qt GUI.
 
 4. workbench_gui_tests.exe:
    - Role: Automated QtTest GUI integration test harness (410 KB).
-   - Coverage: 11 passed scenarios covering all 5 views and modal workflows.
+   - Coverage: 9 GUI scenario test methods + setup/cleanup (11 passed QtTest entries total, 1810 ms) verifying all 5 views and modal workflows.
 
 ================================================================================
-DEPLOYED RUNTIME DEPENDENCIES
+2. DEPLOYED RUNTIME DEPENDENCIES (STANDALONE ZERO-INSTALL EXECUTION)
 ================================================================================
 
 Qt 6.8.2 Shared Dynamic Libraries:
@@ -82,28 +89,143 @@ Microsoft Visual C++ 2022 x64 Runtime Redistributables:
   - vcruntime140_1.dll
 
 Windows Graphics Subsystem Libraries:
-  - opengl32sw.dll (software rasterizer fallback)
+  - opengl32sw.dll (Mesa software rasterizer fallback)
   - D3Dcompiler_47.dll (Direct3D shader compiler)
 
 ================================================================================
-BUNDLED DATA ASSETS & DOCUMENTATION
+3. C++ SOURCE CODE ARCHITECTURE (src/)
 ================================================================================
 
-Example Assets (data/examples/):
-  - sample_tetrahedron_ascii.stl (ASCII STL tetrahedron geometry, 4 facets)
-  - synthetic_temperature_nodes.csv (7-node synthetic temperature distribution)
-  - manifest.json (provenance metadata and physical descriptions)
-  - README.md (data usage guidelines)
+src/core/ (Pure C++17 Domain & Computational Engine - Zero Qt Dependencies):
+  - src/core/include/workbench/core.hpp
+  - src/core/include/workbench/domain/geometry.hpp, thermal.hpp
+  - src/core/include/workbench/thermal/solver.hpp
+  - src/core/src/thermal/solver.cpp
+  - src/core/include/workbench/performance/benchmark.hpp, thread_pool.hpp
+  - src/core/src/performance/benchmark.cpp, thread_pool.cpp
+  - src/core/include/workbench/embedded/adapter.hpp
+  - src/core/src/embedded/adapter.cpp
+  - src/core/include/workbench/backprop/model.hpp
+  - src/core/src/backprop/model.cpp
+  - src/core/include/workbench/io/stl_parser.hpp, csv_parser.hpp, parse_result.hpp
+  - src/core/src/io/stl_parser.cpp, csv_parser.cpp
+  - src/core/src/core.cpp
 
-Submission Documentation (docs/):
+src/app/ (Qt 6.8.2 Desktop User Interface):
+  - src/app/main.cpp
+  - src/app/main_window.hpp, main_window.cpp
+  - src/app/views/geometry_view.hpp, geometry_view.cpp
+  - src/app/views/thermal_view.hpp, thermal_view.cpp
+  - src/app/views/benchmark_view.hpp, benchmark_view.cpp
+  - src/app/views/hardware_view.hpp, hardware_view.cpp
+  - src/app/views/backprop_view.hpp, backprop_view.cpp
+  - src/app/widgets/viewport_3d.hpp, viewport_3d.cpp
+  - src/app/widgets/plot_widget.hpp, plot_widget.cpp
+  - src/app/widgets/status_bar.hpp, status_bar.cpp
+
+src/experiments/ (Headless Verification Runner):
+  - src/experiments/main.cpp (numerical validation, timing capture, CSV export)
+
+src/launcher/ (Win32 Native Launcher):
+  - src/launcher/main.cpp (Win32 API process creation wrapper)
+
+================================================================================
+4. BUILD CONFIGURATION & PRESETS
+================================================================================
+
+Root Build Configuration:
+  - CMakeLists.txt (top-level project CMake file specifying C++17, modules, and tests)
+  - CMakePresets.json (presets for windows-msvc-x64-debug and windows-msvc-x64-release)
+  - packaging/ (packaging metadata, launcher resource, icon, manifest)
+
+================================================================================
+5. AUTOMATED TEST SUITE (tests/)
+================================================================================
+
+CTest Test Harnesses:
+  - tests/CMakeLists.txt
+  - tests/test_main.cpp (Catch2 test runner entry point)
+  - tests/test_parsers.cpp (ASCII STL parsing, bounding box, CSV parsing, diagnostics)
+  - tests/test_thermal.cpp (1D FEA solver, midpoint accuracy, convergence study)
+  - tests/test_performance.cpp (multicore thread pool, serial/parallel agreement <= 1e-8 C)
+  - tests/test_embedded.cpp (ESP32, Arty A7, JTAG mock adapters state machines)
+  - tests/test_backprop.cpp (analytical gradients, finite difference check, loss decrease)
+  - tests/test_gui_integration.cpp (9 GUI scenario test methods + setup/cleanup, 11 passed QtTest entries across all 5 views)
+  - tests/verify_exit_code.cmake (CTest exit code validation script)
+
+================================================================================
+6. VERIFIED EXPERIMENTAL DATASETS & LOGS (results/)
+================================================================================
+
+Numerical Result CSVs:
+  - results/thermal_nodal_temperature_N10.csv (FEA nodal temperatures vs exact analytical)
+  - results/thermal_midpoint_errors.csv (element midpoint error distributions)
+  - results/thermal_convergence_study.csv (grid refinement study N=10 to 1000)
+  - results/backprop_training_trace_100steps.csv (100-step gradient descent trace)
+  - results/backprop_gradient_check.csv (finite-difference gradient verification)
+  - results/benchmark_1000cases_summary.csv (1 to 4 worker threads speedup and efficiency, p in {1, 2, 3, 4})
+  - results/benchmark_raw_timings.csv (raw timing repetitions across thread counts)
+  - results/serial_parallel_agreement.csv (case-by-case serial vs parallel max abs diff)
+
+Execution Logs & Reports:
+  - results/logs/experiment_execution.log (comprehensive headless execution trace)
+  - results/logs/PHASE_2_EXECUTION_REPORT.md (formal numerical verification report)
+  - results/reference/reference_analytical_check.py (independent Python reference model)
+
+================================================================================
+7. DOCUMENTATION, CHECKLISTS & EVIDENCE (docs/)
+================================================================================
+
+Technical Reports & Manuals:
   - docs/FINAL_REPORT.md (comprehensive engineering assignment report)
   - docs/DEMO_SCRIPT.md (structured live demonstration walkthrough)
   - docs/AI_USE_LOG.md (transparent AI assistance log and methodology)
-  - README.md (packaged user manual and architecture guide)
-  - THIRD_PARTY_NOTICES.md (licensing information for Qt LGPLv3 and MSVC runtime)
+  - docs/ARCHITECTURE.md (system architecture and module decoupling)
+  - docs/MODEL_AND_TECH_DECISIONS.md (modeling principles and technical decisions)
+  - docs/REQUIREMENTS_TRACEABILITY.md (comprehensive requirement mapping matrix)
+  - docs/DEVELOPMENT_CHECKLIST.md (verified engineering checklist)
+  - docs/VALIDATION_PROTOCOL.md (validation criteria and protocols)
+  - docs/PACKAGING_AND_RELEASE.md (release packaging and distribution specifications)
+  - docs/WORKLOG.md (engineering worklog across all implementation phases)
+
+Phase Reports & Verification Matrices:
+  - docs/PHASE_2_EXECUTION_REPORT.md (Phase 2 core computational verification)
+  - docs/PHASE_3_INTEGRATION_VERIFICATION.md (Phase 3 GUI integration verification)
+  - docs/PHASE_3_TEST_MATRIX.csv (Phase 3 41-row integration test matrix)
+  - docs/PHASE_3_BASELINE.md (Phase 3 configuration baseline)
+  - docs/PHASE_4_BASELINE.md (Phase 4 release configuration baseline)
+  - docs/PHASE_4_RELEASE_VERIFICATION.md (Phase 4 packaging & acceptance verification)
+  - docs/PHASE_4_ACCEPTANCE_MATRIX.csv (Phase 4 27-point acceptance criteria)
+  - docs/PHASE_4_PACKAGE_AUDIT.md (Phase 4 package audit and relocation test report)
+
+Visual Evidence, Acceptance Logs & Submission Artifacts (docs/evidence/):
+  - docs/evidence/EVIDENCE_LOG.md (comprehensive 20-scenario manual acceptance log across all 5 modules)
+  - docs/evidence/screenshots/ (24 full-screen acceptance screenshots covering all 5 views and test states)
+  - docs/evidence/csv/ (9 verified numerical result and acceptance CSV exports)
+  - docs/evidence/video/Screen Recording 2026-11-02 072049.mp4 (formal 9-minute application demonstration video)
+  - docs/evidence/assignment/Handwritten.pdf (2-page handwritten mathematical derivations for backpropagation and FEA)
+  - docs/evidence/phase3/ (genuine Phase 3 application screenshots across 5 views)
+  - docs/evidence/phase4/ (genuine Phase 4 release build, CTest, and deployment screenshots)
 
 ================================================================================
-DISCLAIMERS & PROVENANCE DECLARATIONS
+8. GOVERNANCE, OWNERSHIP & THIRD-PARTY LICENSING
+================================================================================
+
+Governance Documents & Assignment Artifacts:
+  - Handwritten.pdf (handwritten mathematical derivation assignment, 2,016,025 bytes)
+  - Screen Recording 2026-11-02 072049.mp4 (live demonstration video recording, 572,798,653 bytes)
+  - README.md (project overview, build instructions, user manual)
+  - PACK_CONTENTS.md (candidate package layout and structure index)
+  - OWNERSHIP.md (intellectual property declaration and candidate code breakdown)
+  - THIRD_PARTY_NOTICES.md (licensing information for Qt LGPLv3 and MSVC runtime)
+  - AGENTS.md (agentic coding rules, guidelines, and non-negotiable constraints)
+
+Repository History:
+  - COMMIT_HISTORY.txt (complete Git commit graph and history log)
+  - EngiWorkbench.bundle (complete offline Git repository bundle)
+
+================================================================================
+9. DISCLAIMERS & PROVENANCE DECLARATIONS
 ================================================================================
 
 1. Embedded Hardware Adapters:
@@ -119,3 +241,4 @@ DISCLAIMERS & PROVENANCE DECLARATIONS
 3. File Format Scope:
    Only ASCII STL is supported in the geometry viewer. Binary STL and proprietary
    CAD solid models are intentionally rejected by design with actionable diagnostics.
+================================================================================
